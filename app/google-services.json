@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "641976902926",
+    "project_id": "digitalwellbeinganalyzer",
+    "storage_bucket": "digitalwellbeinganalyzer.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:641976902926:android:899b57119c9ab38a15635f",
+        "android_client_info": {
+          "package_name": "com.example.digitalwellbeinganalyzer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-ZMLjUkkNNbwwK69oDmYOw7jbjAiRk40"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
