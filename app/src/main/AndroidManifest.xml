@@ -22,6 +22,9 @@
             android:name=".views.ForgotPasswordActivity"
             android:exported="false" />
         <activity
+            android:name=".views.DashboardActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.SplashActivity"
             android:exported="true">
             <intent-filter>
