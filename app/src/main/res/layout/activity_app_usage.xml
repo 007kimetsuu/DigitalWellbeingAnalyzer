@@ -53,14 +53,12 @@
             android:textColor="@color/text_primary" />
 
         <!-- Placeholder -->
-        <TextView
-            android:id="@+id/usagePlaceholderText"
+        <LinearLayout
+            android:id="@+id/appUsageContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="App usage data will appear here."
-            android:textSize="16sp"
-            android:textColor="@color/text_secondary" />
+            android:orientation="vertical" />
 
         <Button
             android:id="@+id/backButton"
