@@ -13,54 +13,227 @@
         android:orientation="vertical"
         android:padding="24dp">
 
-        <!-- Page Title -->
+        <!-- Header -->
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Behaviour Analysis"
+            android:text="Insights &amp; Trends"
             android:textSize="30sp"
             android:textStyle="bold"
             android:textColor="@color/primary" />
 
-        <!-- Overall Status -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Understand how you use your device"
+            android:textSize="16sp"
+            android:textColor="@color/text_secondary" />
+
+
+        <!-- Today's Overview -->
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
-            android:text="Today's Behaviour"
+            android:text="Today's Overview"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/text_primary" />
 
-        <TextView
-            android:id="@+id/behaviorStatusText"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <!-- Screen Time -->
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Screen Time"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary" />
+
+                <TextView
+                    android:id="@+id/analyticsScreenTimeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="0h 0m"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary" />
+
+            </LinearLayout>
+
+
+            <!-- Active Apps -->
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Active Apps"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary" />
+
+                <TextView
+                    android:id="@+id/sessionCountText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="0"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <!-- Average -->
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="Behaviour analysis will appear here."
-            android:textSize="16sp"
-            android:textColor="@color/text_secondary" />
+            android:padding="16dp"
+            android:orientation="vertical"
+            android:background="@color/white">
 
-        <!-- Analysis Categories -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Average Usage per Active App"
+                android:textSize="14sp"
+                android:textColor="@color/text_secondary" />
+
+            <TextView
+                android:id="@+id/averageSessionText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="0m"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/primary" />
+
+        </LinearLayout>
+
+
+        <!-- Trend -->
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Analysis Factors"
+            android:text="Usage Trend"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/text_primary" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="• Screen time&#10;• Session duration&#10;• Scrolling behaviour&#10;• Late-night usage&#10;• Frequent checking"
-            android:textSize="16sp"
-            android:lineSpacingExtra="8dp"
-            android:textColor="@color/text_secondary" />
+            android:padding="18dp"
+            android:orientation="vertical"
+            android:background="@color/white">
 
-        <!-- Back Button -->
+            <TextView
+                android:id="@+id/trendSummaryText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Usage trend will appear here."
+                android:textSize="16sp"
+                android:textColor="@color/text_primary" />
+
+        </LinearLayout>
+
+
+        <!-- Behaviour Insight -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Behaviour Insight"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:padding="18dp"
+            android:orientation="vertical"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/behaviourInsightText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Behaviour insight will appear here."
+                android:textSize="16sp"
+                android:textColor="@color/text_primary" />
+
+        </LinearLayout>
+
+
+        <!-- Usage Pattern -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Usage Pattern"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:padding="18dp"
+            android:orientation="vertical"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/patternText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Your usage pattern will appear here."
+                android:textSize="16sp"
+                android:textColor="@color/text_primary" />
+
+        </LinearLayout>
+
+
+        <!-- Back -->
+
         <Button
             android:id="@+id/backButton"
             android:layout_width="match_parent"
@@ -71,5 +244,6 @@
             android:textStyle="bold" />
 
     </LinearLayout>
+    
 
 </ScrollView>

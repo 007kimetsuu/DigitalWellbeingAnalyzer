@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="110dp">
+
+        <!-- ================= HEADER ================= -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- Profile image placeholder -->
+
+            <ImageView
+                android:id="@+id/profileImage"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:src="@drawable/ic_person"
+                android:background="@drawable/circle_profile_background"
+                android:padding="8dp"
+                android:contentDescription="Profile" />
+
+            <TextView
+                android:id="@+id/greetingText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"
+                android:text="Good morning, Student"
+                android:textColor="@color/primary"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/settingsButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_settings"
+                android:padding="7dp"
+                android:contentDescription="Settings" />
+
+        </LinearLayout>
+
+
+        <!-- ================= CONFIDENCE CARD ================= -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="290dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_confidence_card"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <FrameLayout
+                android:layout_width="170dp"
+                android:layout_height="170dp">
+
+                <ProgressBar
+                    android:id="@+id/confidenceProgress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="170dp"
+                    android:layout_height="170dp"
+                    android:indeterminate="false"
+                    android:max="100"
+                    android:progress="89"
+                    android:rotation="-90"
+                    android:progressDrawable="@drawable/confidence_progress" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/confidenceText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="89%"
+                        android:textColor="@color/secondary"
+                        android:textSize="38sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CONFIDENCE"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp"
+                        android:letterSpacing="0.08" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+
+            <TextView
+                android:id="@+id/riskStatusText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_risk_status"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="Moderate Risk Identified"
+                android:textColor="@color/tertiary"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <!-- ================= CRITICAL RISK FACTORS ================= -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_white_card"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Critical Risk Factors"
+                    android:textColor="@color/on_surface"
+                    android:textSize="21sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_ml_chip"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:text="ML ANALYZED"
+                    android:textColor="@color/primary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+            <!-- Risk 1 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="92dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_risk_item"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bg_risk_icon_red"
+                    android:gravity="center"
+                    android:text="☾"
+                    android:textColor="@color/error"
+                    android:textSize="25sp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Late-night phone usage"
+                        android:textColor="@color/on_surface"
+                        android:textSize="15sp" />
+
+                    <ProgressBar
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:layout_marginTop="10dp"
+                        android:max="100"
+                        android:progress="90"
+                        android:progressDrawable="@drawable/risk_progress_red" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="High"
+                    android:textColor="@color/error"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+            <!-- Risk 2 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="92dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_risk_item"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bg_risk_icon_amber"
+                    android:gravity="center"
+                    android:text="◷"
+                    android:textColor="@color/tertiary"
+                    android:textSize="25sp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Long continuous sessions"
+                        android:textColor="@color/on_surface"
+                        android:textSize="15sp" />
+
+                    <ProgressBar
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:layout_marginTop="10dp"
+                        android:max="100"
+                        android:progress="72"
+                        android:progressDrawable="@drawable/risk_progress_amber" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Amber"
+                    android:textColor="@color/tertiary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+            <!-- Risk 3 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="92dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_risk_item"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bg_risk_icon_green"
+                    android:gravity="center"
+                    android:text="●"
+                    android:textColor="@color/secondary"
+                    android:textSize="22sp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="High social media use"
+                        android:textColor="@color/on_surface"
+                        android:textSize="15sp" />
+
+                    <ProgressBar
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:layout_marginTop="10dp"
+                        android:max="100"
+                        android:progress="58"
+                        android:progressDrawable="@drawable/risk_progress_green" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="58dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Elevated"
+                    android:textColor="@color/secondary"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+            <!-- Risk 4 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="92dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_risk_item"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bg_risk_icon_blue"
+                    android:gravity="center"
+                    android:text="↘"
+                    android:textColor="@color/primary"
+                    android:textSize="25sp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Reduced productivity"
+                        android:textColor="@color/on_surface"
+                        android:textSize="15sp" />
+
+                    <ProgressBar
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:layout_marginTop="10dp"
+                        android:max="100"
+                        android:progress="50"
+                        android:progressDrawable="@drawable/risk_progress_blue" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="58dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Notable"
+                    android:textColor="@color/primary"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <!-- ================= STAT CARDS ================= -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="145dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_white_card"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⚠"
+                    android:textColor="@color/error"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="CRITICAL PEAKS"
+                    android:textColor="@color/on_surface"
+                    android:textSize="12sp"
+                    android:letterSpacing="0.08" />
+
+                <TextView
+                    android:id="@+id/criticalPeaksText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="14"
+                    android:textColor="@color/on_surface"
+                    android:textSize="32sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Last 7 days"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+
+            <Space
+                android:layout_width="16dp"
+                android:layout_height="1dp" />
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="145dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_white_card"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="◴"
+                    android:textColor="@color/tertiary"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="AVG. SESSION"
+                    android:textColor="@color/on_surface"
+                    android:textSize="12sp"
+                    android:letterSpacing="0.08" />
+
+                <TextView
+                    android:id="@+id/averageSessionText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="52m"
+                    android:textColor="@color/on_surface"
+                    android:textSize="32sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+12% from normal"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <!-- ================= AI RECOMMENDATION ================= -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_ai_recommendation"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AI Recommendation"
+                android:textColor="@color/on_primary"
+                android:textSize="21sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Our model suggests activating &quot;Deep Work&quot; mode for the next 4 hours to mitigate digital fatigue and restore cognitive focus."
+                android:textColor="@color/on_primary"
+                android:textSize="16sp"
+                android:lineSpacingExtra="3dp" />
+
+            <Button
+                android:id="@+id/enableFocusShieldButton"
+                android:layout_width="wrap_content"
+                android:layout_height="52dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_white_pill"
+                android:text="Enable Focus Shield"
+                android:textColor="@color/primary"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</ScrollView>
