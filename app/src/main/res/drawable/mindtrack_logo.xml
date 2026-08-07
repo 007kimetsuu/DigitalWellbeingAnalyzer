@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="78dp"
+    android:height="78dp"
+    android:viewportWidth="78"
+    android:viewportHeight="78">
+
+    <!-- Phone outline -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="@color/primary"
+        android:strokeWidth="5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M24,8
+                          L54,8
+                          C58,8 61,11 61,15
+                          L61,63
+                          C61,67 58,70 54,70
+                          L24,70
+                          C20,70 17,67 17,63
+                          L17,15
+                          C17,11 20,8 24,8 Z" />
+
+    <!-- Green heart -->
+    <path
+        android:fillColor="#67D9A5"
+        android:pathData="M39,27
+                          C34,19 22,21 22,30
+                          C22,38 30,42 39,48
+                          C48,42 56,38 56,30
+                          C56,21 44,19 39,27 Z" />
+
+    <!-- Red heart -->
+    <path
+        android:fillColor="#F34D50"
+        android:pathData="M39,42
+                          C35,36 27,38 27,44
+                          C27,50 33,53 39,57
+                          C45,53 51,50 51,44
+                          C51,38 43,36 39,42 Z" />
+
+</vector>
