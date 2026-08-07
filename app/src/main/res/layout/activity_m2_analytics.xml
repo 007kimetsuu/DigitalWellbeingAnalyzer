@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F6FB">
+
+    <!-- ================================================= -->
+    <!-- SCROLLABLE ANALYTICS CONTENT                      -->
+    <!-- ================================================= -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomNavigation"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+            <!-- ================= HEADER ================= -->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="◉  Good morning, Student"
+                    android:textColor="#5046E5"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/settingsIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:gravity="center"
+                    android:text="⚙"
+                    android:textColor="#111111"
+                    android:textSize="20sp" />
+
+            </RelativeLayout>
+
+
+            <!-- ================================================= -->
+            <!-- RISK ANALYSIS ENTRY CARD                          -->
+            <!-- ================================================= -->
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mindfulStatusCard"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="12dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Risk Analysis"
+                            android:textColor="#222222"
+                            android:textSize="19sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:text="→"
+                            android:textColor="#5046E5"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/riskStatusText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="#FFF0DD"
+                        android:paddingStart="12dp"
+                        android:paddingTop="6dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="6dp"
+                        android:text="Moderate Risk Identified"
+                        android:textColor="#D47A19"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/confidenceText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="89% confidence"
+                        android:textColor="#0A9954"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- ================================================= -->
+            <!-- INSIGHTS ENTRY CARD                               -->
+            <!-- ================================================= -->
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/insightsCard"
+                android:layout_width="match_parent"
+                android:layout_height="135dp"
+                android:layout_marginTop="14dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="#5144DD"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Behavioral Insights"
+                            android:textColor="#FFFFFF"
+                            android:textSize="19sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:text="→"
+                            android:textColor="#FFFFFF"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:text="Discover patterns in your digital behaviour and personalized recommendations."
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:text="View weekly insights"
+                        android:textColor="#DCD9FF"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- ================================================= -->
+            <!-- QUICK STATS                                       -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <!-- Critical Peaks -->
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="105dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="⚠"
+                            android:textColor="#E85C52"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/criticalPeaksText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="14"
+                            android:textColor="#222222"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="CRITICAL PEAKS"
+                            android:textColor="#777777"
+                            android:textSize="9sp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <!-- Average Session -->
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="105dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="◷"
+                            android:textColor="#D9822B"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/averageSessionText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="52m"
+                            android:textColor="#222222"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="AVG. SESSION"
+                            android:textColor="#777777"
+                            android:textSize="9sp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+
+            <!-- ================================================= -->
+            <!-- AI RECOMMENDATION                                 -->
+            <!-- ================================================= -->
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="165dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="20dp"
+                app:cardBackgroundColor="#5144DD"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="AI Recommendation"
+                        android:textColor="#FFFFFF"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Our model suggests activating 'Deep Work' mode for the next 4 hours to mitigate digital fatigue and restore cognitive focus."
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="42dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Enable Focus Shield"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <!-- ================================================= -->
+    <!-- BOTTOM NAVIGATION                                 -->
+    <!-- ================================================= -->
+
+    <LinearLayout
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:elevation="8dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/navHome"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⌂"
+                android:textColor="#777777"
+                android:textSize="21sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home"
+                android:textColor="#777777"
+                android:textSize="10sp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/navAnalytics"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="▥"
+                android:textColor="#5046E5"
+                android:textSize="21sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Analytics"
+                android:textColor="#5046E5"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/navGuides"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="◇"
+                android:textColor="#777777"
+                android:textSize="21sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Guides"
+                android:textColor="#777777"
+                android:textSize="10sp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/navProfile"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="○"
+                android:textColor="#777777"
+                android:textSize="21sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile"
+                android:textColor="#777777"
+                android:textSize="10sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

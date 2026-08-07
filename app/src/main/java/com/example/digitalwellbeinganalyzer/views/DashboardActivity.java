@@ -2,23 +2,25 @@ package com.example.digitalwellbeinganalyzer.views;
 
 import android.app.AppOpsManager;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Process;
 import android.provider.Settings;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import android.app.usage.UsageStats;
+import android.app.usage.UsageStatsManager;
+import java.util.Calendar;
+import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.digitalwellbeinganalyzer.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
+import android.content.Intent;
 public class DashboardActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
+    private TextView screenTimeText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         TextView welcomeText = findViewById(R.id.welcomeText);
 
-        TextView screenTimeText = findViewById(R.id.screenTimeText);
+        screenTimeText = findViewById(R.id.screenTimeText);
 
         TextView wellbeingScoreText =
                 findViewById(R.id.wellbeingScoreText);
@@ -62,11 +64,17 @@ public class DashboardActivity extends AppCompatActivity {
 
         if (currentUser != null) {
 
+            String displayName = currentUser.getDisplayName();
             String email = currentUser.getEmail();
 
-            if (email != null) {
-                welcomeText.setText(email);
+            if (displayName != null && !displayName.trim().isEmpty()) {
+                welcomeText.setText(displayName + " 👋");
+            } else if (email != null && !email.trim().isEmpty()) {
+                String username = email.substring(0, email.indexOf("@"));
+                welcomeText.setText(username + " 👋");
             }
+
+            loadTodayScreenTime();
         }
 
         // =====================================================
@@ -130,7 +138,7 @@ public class DashboardActivity extends AppCompatActivity {
 
             Intent intent = new Intent(
                     DashboardActivity.this,
-                    BehaviorAnalysisActivity.class
+                    M2AnalyticsActivity.class
             );
 
             startActivity(intent);
@@ -189,5 +197,64 @@ public class DashboardActivity extends AppCompatActivity {
         );
 
         return mode == AppOpsManager.MODE_ALLOWED;
+    }
+
+    private void loadTodayScreenTime() {
+
+        if (!hasUsageAccessPermission()) {
+            screenTimeText.setText("--");
+            return;
+        }
+
+        UsageStatsManager usageStatsManager =
+                (UsageStatsManager) getSystemService(
+                        Context.USAGE_STATS_SERVICE
+                );
+
+        if (usageStatsManager == null) {
+            screenTimeText.setText("0h 0m");
+            return;
+        }
+
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        long startTime = calendar.getTimeInMillis();
+        long endTime = System.currentTimeMillis();
+
+        List<UsageStats> usageStatsList =
+                usageStatsManager.queryUsageStats(
+                        UsageStatsManager.INTERVAL_DAILY,
+                        startTime,
+                        endTime
+                );
+
+        long totalUsageMillis = 0;
+
+        if (usageStatsList != null) {
+
+            for (UsageStats usageStats : usageStatsList) {
+
+                totalUsageMillis +=
+                        usageStats.getTotalTimeInForeground();
+            }
+        }
+
+        long totalMinutes =
+                totalUsageMillis / (1000 * 60);
+
+        long hours =
+                totalMinutes / 60;
+
+        long minutes =
+                totalMinutes % 60;
+
+        screenTimeText.setText(
+                hours + "h " + minutes + "m"
+        );
     }
 }

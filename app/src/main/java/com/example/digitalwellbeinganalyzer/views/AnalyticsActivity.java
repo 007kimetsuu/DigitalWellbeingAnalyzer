@@ -4,8 +4,10 @@ import android.app.AppOpsManager;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Process;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,66 +19,93 @@ import java.util.List;
 
 public class AnalyticsActivity extends AppCompatActivity {
 
-    private TextView analyticsScreenTimeText;
-    private TextView sessionCountText;
     private TextView averageSessionText;
-    private TextView trendSummaryText;
-    private TextView behaviourInsightText;
-    private TextView patternText;
+    private TextView averageSessionChangeText;
+    private TextView mindfulStatusText;
+    private TextView mindfulDescriptionText;
+    private TextView weeklyScreenTimeText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_analytics);
 
         connectViews();
 
         loadAnalyticsData();
-        findViewById(R.id.backButton).setOnClickListener(v -> {
-            finish();
-        });
+
+        setupRiskButton();
+
+        setupBottomNavigation();
     }
 
+    // =========================================================
+    // CONNECT VIEWS
+    // =========================================================
+
     private void connectViews() {
-
-        analyticsScreenTimeText =
-                findViewById(R.id.analyticsScreenTimeText);
-
-        sessionCountText =
-                findViewById(R.id.sessionCountText);
 
         averageSessionText =
                 findViewById(R.id.averageSessionText);
 
-        trendSummaryText =
-                findViewById(R.id.trendSummaryText);
+        averageSessionChangeText =
+                findViewById(R.id.averageSessionChangeText);
 
-        behaviourInsightText =
-                findViewById(R.id.behaviourInsightText);
+        mindfulStatusText =
+                findViewById(R.id.mindfulStatusText);
 
-        patternText =
-                findViewById(R.id.patternText);
+        mindfulDescriptionText =
+                findViewById(R.id.mindfulDescriptionText);
+
+        weeklyScreenTimeText =
+                findViewById(R.id.weeklyScreenTimeText);
     }
+
+    // =========================================================
+    // RISK ANALYSIS BUTTON
+    // =========================================================
+
+    private void setupRiskButton() {
+
+        View riskButton =
+                findViewById(R.id.riskAnalysisButton);
+
+        if (riskButton != null) {
+
+            riskButton.setOnClickListener(v -> {
+
+                Intent intent = new Intent(
+                        AnalyticsActivity.this,
+                        activity_analytics_risk.class
+                );
+
+                startActivity(intent);
+            });
+        }
+    }
+
+    // =========================================================
+    // LOAD ANALYTICS DATA
+    // =========================================================
 
     private void loadAnalyticsData() {
 
         if (!hasUsageAccessPermission()) {
 
-            analyticsScreenTimeText.setText("--");
-            sessionCountText.setText("--");
             averageSessionText.setText("--");
 
-            trendSummaryText.setText(
-                    "Usage Access permission is required to calculate your analytics."
+            averageSessionChangeText.setText(
+                    "Usage Access permission required"
             );
 
-            behaviourInsightText.setText(
-                    "Enable Usage Access from Android Settings to begin analysing your usage."
+            mindfulStatusText.setText("Waiting");
+
+            mindfulDescriptionText.setText(
+                    "Enable Usage Access so MindTrack can analyse your device usage."
             );
 
-            patternText.setText(
-                    "No usage pattern is available yet."
-            );
+            weeklyScreenTimeText.setText("--");
 
             return;
         }
@@ -89,16 +118,19 @@ public class AnalyticsActivity extends AppCompatActivity {
             return;
         }
 
-        long endTime = System.currentTimeMillis();
+        long endTime =
+                System.currentTimeMillis();
 
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar =
+                Calendar.getInstance();
 
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
 
-        long startTime = calendar.getTimeInMillis();
+        long startTime =
+                calendar.getTimeInMillis();
 
         List<UsageStats> usageStatsList =
                 usageStatsManager.queryUsageStats(
@@ -107,31 +139,20 @@ public class AnalyticsActivity extends AppCompatActivity {
                         endTime
                 );
 
-        if (usageStatsList == null || usageStatsList.isEmpty()) {
+        if (usageStatsList == null ||
+                usageStatsList.isEmpty()) {
 
-            analyticsScreenTimeText.setText("0h 0m");
-            sessionCountText.setText("0");
-            averageSessionText.setText("0m");
-
-            trendSummaryText.setText(
-                    "No usage data has been recorded today."
-            );
-
-            behaviourInsightText.setText(
-                    "Use your device normally and return later to see insights."
-            );
-
-            patternText.setText(
-                    "Your usage pattern will appear here."
-            );
+            showNoDataState();
 
             return;
         }
 
         long totalUsageMillis = 0;
-        int appsWithUsage = 0;
 
-        for (UsageStats usageStats : usageStatsList) {
+        int activeApps = 0;
+
+        for (UsageStats usageStats :
+                usageStatsList) {
 
             long usageTime =
                     usageStats.getTotalTimeInForeground();
@@ -139,7 +160,8 @@ public class AnalyticsActivity extends AppCompatActivity {
             if (usageTime > 0) {
 
                 totalUsageMillis += usageTime;
-                appsWithUsage++;
+
+                activeApps++;
             }
         }
 
@@ -152,26 +174,22 @@ public class AnalyticsActivity extends AppCompatActivity {
         long minutes =
                 totalMinutes % 60;
 
-        analyticsScreenTimeText.setText(
-                hours + "h " + minutes + "m"
+        // =====================================================
+        // DAILY SCREEN TIME
+        // =====================================================
+
+        weeklyScreenTimeText.setText(
+                hours + "h " + minutes + "m Daily Avg"
         );
 
-        /*
-         * At this stage we use the number of apps with
-         * recorded foreground activity as a temporary
-         * activity indicator.
-         *
-         * M1's session tracking will replace this with
-         * actual session data later.
-         */
-        sessionCountText.setText(
-                String.valueOf(appsWithUsage)
-        );
+        // =====================================================
+        // AVERAGE USAGE
+        // =====================================================
 
-        if (appsWithUsage > 0) {
+        if (activeApps > 0) {
 
             long averageMinutes =
-                    totalMinutes / appsWithUsage;
+                    totalMinutes / activeApps;
 
             averageSessionText.setText(
                     averageMinutes + "m"
@@ -182,83 +200,80 @@ public class AnalyticsActivity extends AppCompatActivity {
             averageSessionText.setText("0m");
         }
 
-        generateBasicInsights(
-                totalMinutes,
-                appsWithUsage
-        );
-    }
-
-    private void generateBasicInsights(
-            long totalMinutes,
-            int activeApps
-    ) {
-
-        if (totalMinutes == 0) {
-
-            trendSummaryText.setText(
-                    "There is not enough usage data to identify a trend yet."
-            );
-
-            behaviourInsightText.setText(
-                    "Keep using your device normally so MindTrack can build a usage profile."
-            );
-
-            patternText.setText(
-                    "No significant pattern detected yet."
-            );
-
-            return;
-        }
+        // =====================================================
+        // MINDFULNESS STATUS
+        // =====================================================
 
         if (totalMinutes < 120) {
 
-            trendSummaryText.setText(
-                    "Your screen time is currently below 2 hours today."
+            mindfulStatusText.setText("Healthy");
+
+            mindfulDescriptionText.setText(
+                    "Your current screen time is relatively low today."
             );
 
         } else if (totalMinutes < 300) {
 
-            trendSummaryText.setText(
-                    "You have accumulated a moderate amount of screen time today."
+            mindfulStatusText.setText("Moderate");
+
+            mindfulDescriptionText.setText(
+                    "Your device usage is moderate today. Consider taking regular breaks."
             );
 
         } else {
 
-            trendSummaryText.setText(
-                    "You have spent more than 5 hours on your device today."
+            mindfulStatusText.setText("Needs Attention");
+
+            mindfulDescriptionText.setText(
+                    "Your screen time is relatively high today. Consider reducing prolonged usage."
             );
         }
 
-        if (activeApps >= 8) {
+        // =====================================================
+        // SUMMARY
+        // =====================================================
 
-            behaviourInsightText.setText(
-                    "Your usage is spread across several applications today."
-            );
-
-        } else if (activeApps >= 3) {
-
-            behaviourInsightText.setText(
-                    "Your usage is currently concentrated across a few applications."
-            );
-
-        } else {
-
-            behaviourInsightText.setText(
-                    "Your usage is currently concentrated in a small number of applications."
-            );
-        }
-
-        patternText.setText(
-                "Detailed behavioural patterns will become available "
-                        + "after interaction tracking is implemented."
+        averageSessionChangeText.setText(
+                activeApps + " active apps today"
         );
     }
+
+    // =========================================================
+    // NO DATA STATE
+    // =========================================================
+
+    private void showNoDataState() {
+
+        averageSessionText.setText("0m");
+
+        averageSessionChangeText.setText(
+                "No usage data yet"
+        );
+
+        mindfulStatusText.setText(
+                "Waiting"
+        );
+
+        mindfulDescriptionText.setText(
+                "Use your device normally and return later to view your analytics."
+        );
+
+        weeklyScreenTimeText.setText(
+                "0h 0m Daily Avg"
+        );
+    }
+
+    // =========================================================
+    // USAGE ACCESS PERMISSION
+    // =========================================================
 
     private boolean hasUsageAccessPermission() {
 
         AppOpsManager appOps =
                 (AppOpsManager)
-                        getSystemService(Context.APP_OPS_SERVICE);
+                        getSystemService(
+                                Context.APP_OPS_SERVICE
+                        );
 
         if (appOps == null) {
             return false;
@@ -271,6 +286,83 @@ public class AnalyticsActivity extends AppCompatActivity {
                         getPackageName()
                 );
 
-        return mode == AppOpsManager.MODE_ALLOWED;
+        return mode ==
+                AppOpsManager.MODE_ALLOWED;
+    }
+
+    // =========================================================
+    // BOTTOM NAVIGATION
+    // =========================================================
+
+    private void setupBottomNavigation() {
+
+        View navHome =
+                findViewById(R.id.navHome);
+
+        View navAnalytics =
+                findViewById(R.id.navAnalytics);
+
+        View navGuides =
+                findViewById(R.id.navGuides);
+
+        View navProfile =
+                findViewById(R.id.navProfile);
+
+
+        // HOME
+        if (navHome != null) {
+
+            navHome.setOnClickListener(v -> {
+
+                Intent intent = new Intent(
+                        AnalyticsActivity.this,
+                        DashboardActivity.class
+                );
+
+                startActivity(intent);
+                finish();
+            });
+        }
+
+
+        // ANALYTICS
+        if (navAnalytics != null) {
+
+            navAnalytics.setOnClickListener(v -> {
+                // Already on Analytics
+            });
+        }
+
+
+        // GUIDES
+        if (navGuides != null) {
+
+            navGuides.setOnClickListener(v -> {
+
+                Intent intent = new Intent(
+                        AnalyticsActivity.this,
+                        GuideActivity.class
+                );
+
+                startActivity(intent);
+                finish();
+            });
+        }
+
+
+        // PROFILE
+        if (navProfile != null) {
+
+            navProfile.setOnClickListener(v -> {
+
+                Intent intent = new Intent(
+                        AnalyticsActivity.this,
+                        ProfileActivity.class
+                );
+
+                startActivity(intent);
+                finish();
+            });
+        }
     }
 }

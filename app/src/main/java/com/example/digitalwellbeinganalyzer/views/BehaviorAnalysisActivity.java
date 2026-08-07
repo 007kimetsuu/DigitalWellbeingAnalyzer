@@ -19,16 +19,16 @@ public class BehaviorAnalysisActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_behavior_analysis);
 
-            Button backButton = findViewById(R.id.backButton);
+        Button backButton = findViewById(R.id.backButton);
 
-            backButton.setOnClickListener(v -> {
-                Intent intent = new Intent(
-                        BehaviorAnalysisActivity.this,
-                        DashboardActivity.class
-                );
-                startActivity(intent);
-                finish();
-            });
+        backButton.setOnClickListener(v -> {
+            Intent intent = new Intent(
+                    BehaviorAnalysisActivity.this,
+                    DashboardActivity.class
+            );
+            startActivity(intent);
+            finish();
+        });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

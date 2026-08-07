@@ -50,6 +50,22 @@
             android:name=".views.activity_analytics_risk"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".views.M2AnalyticsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.GuideActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.EditProfileActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".views.InsightsActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
