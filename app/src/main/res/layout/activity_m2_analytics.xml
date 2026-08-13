@@ -1,34 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F7F6FB">
+    android:background="#F7F7FB">
 
-    <!-- ================================================= -->
-    <!-- SCROLLABLE ANALYTICS CONTENT                      -->
-    <!-- ================================================= -->
+    <!-- ========================================================= -->
+    <!-- SCROLLABLE CONTENT                                        -->
+    <!-- ========================================================= -->
 
     <ScrollView
+        android:id="@+id/m2ScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottomNavigation"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="18dp">
+            android:paddingStart="16dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="24dp">
 
-            <!-- ================= HEADER ================= -->
+            <!-- ================================================= -->
+            <!-- HEADER                                            -->
+            <!-- ================================================= -->
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="55dp">
+                android:layout_height="52dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -36,33 +41,30 @@
                     android:layout_centerVertical="true"
                     android:text="◉  Good morning, Student"
                     android:textColor="#5046E5"
-                    android:textSize="16sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/settingsIcon"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
                     android:layout_alignParentEnd="true"
                     android:gravity="center"
                     android:text="⚙"
-                    android:textColor="#111111"
+                    android:textColor="#222222"
                     android:textSize="20sp" />
 
             </RelativeLayout>
 
 
             <!-- ================================================= -->
-            <!-- RISK ANALYSIS ENTRY CARD                          -->
+            <!-- WEEKLY SCREEN TIME                                -->
             <!-- ================================================= -->
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/mindfulStatusCard"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="12dp"
-                android:clickable="true"
-                android:focusable="true"
+                android:layout_height="220dp"
+                android:layout_marginTop="8dp"
                 app:cardBackgroundColor="#FFFFFF"
                 app:cardCornerRadius="18dp"
                 app:cardElevation="2dp">
@@ -75,51 +77,169 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="32dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Risk Analysis"
-                            android:textColor="#222222"
-                            android:textSize="19sp"
+                            android:text="Weekly Screen Time"
+                            android:textColor="#303044"
+                            android:textSize="15sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:text="→"
-                            android:textColor="#5046E5"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
+                            android:background="#F0EDFF"
+                            android:paddingStart="9dp"
+                            android:paddingTop="4dp"
+                            android:paddingEnd="9dp"
+                            android:paddingBottom="4dp"
+                            android:text="Last 7 Days"
+                            android:textColor="#6258D9"
+                            android:textSize="9sp" />
 
                     </RelativeLayout>
 
                     <TextView
-                        android:id="@+id/riskStatusText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="#FFF0DD"
-                        android:paddingStart="12dp"
-                        android:paddingTop="6dp"
-                        android:paddingEnd="12dp"
-                        android:paddingBottom="6dp"
-                        android:text="Moderate Risk Identified"
-                        android:textColor="#D47A19"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
+                        android:layout_marginTop="4dp"
+                        android:text="Daily average"
+                        android:textColor="#888899"
+                        android:textSize="11sp" />
 
-                    <TextView
-                        android:id="@+id/confidenceText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <!-- Simple graph area -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="125dp"
                         android:layout_marginTop="8dp"
-                        android:text="89% confidence"
-                        android:textColor="#0A9954"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:gravity="bottom"
+                        android:orientation="horizontal"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp">
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="45dp"
+                            android:layout_marginEnd="7dp"
+                            android:layout_weight="1"
+                            android:background="#D9D5FF" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="62dp"
+                            android:layout_marginEnd="7dp"
+                            android:layout_weight="1"
+                            android:background="#C9C3FF" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="7dp"
+                            android:layout_weight="1"
+                            android:background="#B8B0FF" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="88dp"
+                            android:layout_marginEnd="7dp"
+                            android:layout_weight="1"
+                            android:background="#8F83F0" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="108dp"
+                            android:layout_marginEnd="7dp"
+                            android:layout_weight="1"
+                            android:background="#6E62E5" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="68dp"
+                            android:layout_marginEnd="7dp"
+                            android:layout_weight="1"
+                            android:background="#9A91F1" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="115dp"
+                            android:layout_weight="1"
+                            android:background="#6255DF" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Mon"
+                            android:textColor="#9999A8"
+                            android:textSize="9sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Tue"
+                            android:textColor="#9999A8"
+                            android:textSize="9sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Wed"
+                            android:textColor="#9999A8"
+                            android:textSize="9sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Thu"
+                            android:textColor="#9999A8"
+                            android:textSize="9sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Fri"
+                            android:textColor="#9999A8"
+                            android:textSize="9sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Sat"
+                            android:textColor="#9999A8"
+                            android:textSize="9sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Sun"
+                            android:textColor="#9999A8"
+                            android:textSize="9sp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -127,64 +247,83 @@
 
 
             <!-- ================================================= -->
-            <!-- INSIGHTS ENTRY CARD                               -->
+            <!-- RISK + INSIGHTS SECTION                           -->
+            <!-- ================================================= -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Deep Analysis"
+                android:textColor="#292938"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <!-- ================================================= -->
+            <!-- RISK ASSESSMENT CARD                              -->
             <!-- ================================================= -->
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/insightsCard"
+                android:id="@+id/mindfulStatusCard"
                 android:layout_width="match_parent"
-                android:layout_height="135dp"
-                android:layout_marginTop="14dp"
+                android:layout_height="112dp"
+                android:layout_marginTop="10dp"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardBackgroundColor="#5144DD"
-                app:cardCornerRadius="18dp"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="16dp"
                 app:cardElevation="2dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:padding="18dp">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="#FFF0F0"
+                        android:gravity="center"
+                        android:text="⚠"
+                        android:textColor="#E85C52"
+                        android:textSize="22sp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="14dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Behavioral Insights"
-                            android:textColor="#FFFFFF"
-                            android:textSize="19sp"
+                            android:text="View Risk Assessment"
+                            android:textColor="#252535"
+                            android:textSize="15sp"
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/riskStatusText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:text="→"
-                            android:textColor="#FFFFFF"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
+                            android:layout_marginTop="4dp"
+                            android:text="Check your current behavioral risk factors"
+                            android:textColor="#777788"
+                            android:textSize="11sp" />
 
-                    </RelativeLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="9dp"
-                        android:text="Discover patterns in your digital behaviour and personalized recommendations."
-                        android:textColor="#FFFFFF"
-                        android:textSize="12sp" />
+                    </LinearLayout>
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
-                        android:text="View weekly insights"
-                        android:textColor="#DCD9FF"
-                        android:textSize="11sp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:text="›"
+                        android:textColor="#5046E5"
+                        android:textSize="25sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -193,24 +332,104 @@
 
 
             <!-- ================================================= -->
-            <!-- QUICK STATS                                       -->
+            <!-- INSIGHTS CARD                                    -->
             <!-- ================================================= -->
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/insightsCard"
+                android:layout_width="match_parent"
+                android:layout_height="112dp"
+                android:layout_marginTop="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="#5144DD"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="#7166E8"
+                        android:gravity="center"
+                        android:text="✦"
+                        android:textColor="#FFFFFF"
+                        android:textSize="22sp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="14dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Explore AI Insights"
+                            android:textColor="#FFFFFF"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Discover your digital usage patterns"
+                            android:textColor="#E2E0FF"
+                            android:textSize="11sp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:text="›"
+                        android:textColor="#FFFFFF"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- ================================================= -->
+            <!-- QUICK STATS                                      -->
+            <!-- ================================================= -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:text="Quick Stats"
+                android:textColor="#292938"
+                android:textSize="17sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <!-- Critical Peaks -->
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="105dp"
+                    android:layout_height="125dp"
                     android:layout_marginEnd="6dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="#FFFFFF"
-                    app:cardCornerRadius="14dp"
+                    app:cardCornerRadius="15dp"
                     app:cardElevation="2dp">
 
                     <LinearLayout
@@ -230,17 +449,27 @@
                             android:id="@+id/criticalPeaksText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
                             android:text="14"
-                            android:textColor="#222222"
-                            android:textSize="22sp"
+                            android:textColor="#242434"
+                            android:textSize="25sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="CRITICAL PEAKS"
-                            android:textColor="#777777"
-                            android:textSize="9sp" />
+                            android:textColor="#777788"
+                            android:textSize="9sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Last 7 days"
+                            android:textColor="#A0A0AE"
+                            android:textSize="8sp" />
 
                     </LinearLayout>
 
@@ -251,11 +480,11 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="105dp"
+                    android:layout_height="125dp"
                     android:layout_marginStart="6dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="#FFFFFF"
-                    app:cardCornerRadius="14dp"
+                    app:cardCornerRadius="15dp"
                     app:cardElevation="2dp">
 
                     <LinearLayout
@@ -275,17 +504,27 @@
                             android:id="@+id/averageSessionText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
                             android:text="52m"
-                            android:textColor="#222222"
-                            android:textSize="22sp"
+                            android:textColor="#242434"
+                            android:textSize="25sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="AVG. SESSION"
-                            android:textColor="#777777"
-                            android:textSize="9sp" />
+                            android:textColor="#777788"
+                            android:textSize="9sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Last 7 days"
+                            android:textColor="#A0A0AE"
+                            android:textSize="8sp" />
 
                     </LinearLayout>
 
@@ -295,15 +534,14 @@
 
 
             <!-- ================================================= -->
-            <!-- AI RECOMMENDATION                                 -->
+            <!-- DAILY USAGE BY CATEGORY                          -->
             <!-- ================================================= -->
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="165dp"
+                android:layout_height="190dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="20dp"
-                app:cardBackgroundColor="#5144DD"
+                app:cardBackgroundColor="#FFFFFF"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="2dp">
 
@@ -311,43 +549,439 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:padding="18dp">
+                    android:padding="16dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="AI Recommendation"
-                        android:textColor="#FFFFFF"
-                        android:textSize="17sp"
+                        android:text="Daily Usage by Category"
+                        android:textColor="#292938"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
 
-                    <TextView
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="15dp"
+                        android:gravity="bottom"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="42dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:background="#C8C2FF" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:background="#D8D5F8" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="70dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:background="#7C70E8" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_weight="1"
+                            android:background="#A49DEF" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Our model suggests activating 'Deep Work' mode for the next 4 hours to mitigate digital fatigue and restore cognitive focus."
-                        android:textColor="#FFFFFF"
-                        android:textSize="12sp" />
+                        android:orientation="horizontal">
 
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="42dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Enable Focus Shield"
-                        android:textSize="10sp" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Social"
+                            android:textColor="#777788"
+                            android:textSize="9sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Work"
+                            android:textColor="#777788"
+                            android:textSize="9sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Play"
+                            android:textColor="#777788"
+                            android:textSize="9sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Other"
+                            android:textColor="#777788"
+                            android:textSize="9sp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
+
+            <!-- ================================================= -->
+            <!-- HOURLY ACTIVITY HEATMAP                          -->
+            <!-- ================================================= -->
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="175dp"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hourly Activity Heatmap"
+                        android:textColor="#292938"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <GridLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:layout_marginTop="14dp"
+                        android:columnCount="12"
+                        android:rowCount="2">
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="2dp"
+                            android:background="#E6E3FF" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="2dp"
+                            android:background="#C8C2FF" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="2dp"
+                            android:background="#8E83EC" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="2dp"
+                            android:background="#6559D9" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="2dp"
+                            android:background="#5144DD" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="2dp"
+                            android:background="#8E83EC" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="2dp"
+                            android:background="#C8C2FF" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="2dp"
+                            android:background="#E6E3FF" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="2dp"
+                            android:background="#8E83EC" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="2dp"
+                            android:background="#6559D9" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="2dp"
+                            android:background="#5144DD" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="2dp"
+                            android:background="#C8C2FF" />
+
+                    </GridLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="6 AM          12 PM          6 PM          12 AM"
+                        android:textColor="#9999A8"
+                        android:textSize="8sp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- ================================================= -->
+            <!-- MOST USED APPS                                   -->
+            <!-- ================================================= -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Most Used Apps"
+                android:textColor="#292938"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="10dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="13dp"
+                app:cardElevation="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:background="#E5E8FF"
+                        android:gravity="center"
+                        android:text="▣"
+                        android:textColor="#5144DD"
+                        android:textSize="20sp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ConnectFlow"
+                            android:textColor="#303044"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Social Networking"
+                            android:textColor="#888899"
+                            android:textSize="9sp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1h 45m"
+                        android:textColor="#6258D9"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="8dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="13dp"
+                app:cardElevation="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:background="#F0E7FF"
+                        android:gravity="center"
+                        android:text="▶"
+                        android:textColor="#925CE5"
+                        android:textSize="18sp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Streamly"
+                            android:textColor="#303044"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Entertainment"
+                            android:textColor="#888899"
+                            android:textSize="9sp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="52m"
+                        android:textColor="#6258D9"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="8dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="13dp"
+                app:cardElevation="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:background="#E5F8EF"
+                        android:gravity="center"
+                        android:text="▣"
+                        android:textColor="#35B879"
+                        android:textSize="18sp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tasks Pro"
+                            android:textColor="#303044"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Productivity"
+                            android:textColor="#888899"
+                            android:textSize="9sp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="38m"
+                        android:textColor="#6258D9"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- Bottom breathing room -->
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="12dp" />
 
         </LinearLayout>
 
     </ScrollView>
 
 
-    <!-- ================================================= -->
-    <!-- BOTTOM NAVIGATION                                 -->
-    <!-- ================================================= -->
+    <!-- ========================================================= -->
+    <!-- FIXED BOTTOM NAVIGATION                                  -->
+    <!-- ========================================================= -->
 
     <LinearLayout
         android:id="@+id/bottomNavigation"
@@ -355,15 +989,19 @@
         android:layout_height="68dp"
         android:layout_alignParentBottom="true"
         android:background="#FFFFFF"
-        android:elevation="8dp"
+        android:elevation="10dp"
         android:gravity="center"
         android:orientation="horizontal">
+
+        <!-- HOME -->
 
         <LinearLayout
             android:id="@+id/navHome"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -384,11 +1022,15 @@
         </LinearLayout>
 
 
+        <!-- ANALYTICS -->
+
         <LinearLayout
             android:id="@+id/navAnalytics"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -410,11 +1052,15 @@
         </LinearLayout>
 
 
+        <!-- GUIDES -->
+
         <LinearLayout
             android:id="@+id/navGuides"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -435,11 +1081,15 @@
         </LinearLayout>
 
 
+        <!-- PROFILE -->
+
         <LinearLayout
             android:id="@+id/navProfile"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center"
             android:orientation="vertical">
 

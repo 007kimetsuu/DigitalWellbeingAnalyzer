@@ -1,16 +1,11 @@
 package com.example.digitalwellbeinganalyzer.views;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import com.example.digitalwellbeinganalyzer.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,309 +13,273 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private TextView profileName, profileEmail;
-    private Button logoutButton;
-    private ImageButton editProfileButton, settingsButton;
-    private ImageView profileImage;
-    private Switch darkModeSwitch;
+    private FirebaseAuth firebaseAuth;
+
+    private android.widget.TextView profileGreetingText;
+    private android.widget.TextView profileNameText;
+    private android.widget.TextView profileEmailText;
+    private android.widget.TextView profileOccupationText;
+
+    private SwitchCompat darkModeSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_profile);
 
-        profileName = findViewById(R.id.profileName);
-        profileEmail = findViewById(R.id.profileEmail);
-        logoutButton = findViewById(R.id.logoutButton);
-        editProfileButton = findViewById(R.id.editProfileButton);
-        settingsButton = findViewById(R.id.settingsButton);
-        profileImage = findViewById(R.id.profileImage);
-        darkModeSwitch = findViewById(R.id.darkModeSwitch);
-
-        TextView notificationSettings = findViewById(R.id.notificationSettings);
-        TextView reminderFrequency = findViewById(R.id.reminderFrequency);
-        TextView breakDuration = findViewById(R.id.breakDuration);
-        TextView privacyControls = findViewById(R.id.privacyControls);
-        TextView exportData = findViewById(R.id.exportData);
-
-        loadUserDetails();
-
-        editProfileButton.setOnClickListener(v -> {
-
-            Intent intent = new Intent(ProfileActivity.this,
-                    EditProfileActivity.class);
-
-            startActivity(intent);
-
-        });
-        settingsButton.setOnClickListener(v -> {
-
-            String[] settings = {
-                    "Account",
-                    "Help & Support",
-                    "About MindTrack",
-                    "Version 1.0"
-            };
-
-            new AlertDialog.Builder(ProfileActivity.this)
-                    .setTitle("Settings")
-                    .setItems(settings, (dialog, which) -> {
-
-                        switch (which) {
-
-                            case 0:
-                                Toast.makeText(ProfileActivity.this,
-                                        "Account Settings Coming Soon",
-                                        Toast.LENGTH_SHORT).show();
-                                break;
-
-                            case 1:
-                                Toast.makeText(ProfileActivity.this,
-                                        "Help & Support Coming Soon",
-                                        Toast.LENGTH_SHORT).show();
-                                break;
-
-                            case 2:
-                                new AlertDialog.Builder(ProfileActivity.this)
-                                        .setTitle("About MindTrack")
-                                        .setMessage("MindTrack\n\nVersion 1.0\n\nA Context-Aware Digital Wellbeing System developed to help users monitor and improve healthy smartphone usage.")
-                                        .setPositiveButton("OK", null)
-                                        .show();
-                                break;
-
-                            case 3:
-                                Toast.makeText(ProfileActivity.this,
-                                        "MindTrack Version 1.0",
-                                        Toast.LENGTH_SHORT).show();
-                                break;
-
-                        }
-
-                    })
-                    .show();
-
-        });
-
-        logoutButton.setOnClickListener(v -> {
-
-            FirebaseAuth.getInstance().signOut();
-
-            Intent intent =
-                    new Intent(ProfileActivity.this,
-                            LoginActivity.class);
-
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-            startActivity(intent);
-
-            finish();
-
-        });
-
-        notificationSettings.setOnClickListener(v -> {
-
-            String[] options = {
-                    "Daily Reminder",
-                    "Weekly Report",
-                    "Focus Alerts"
-            };
-
-            boolean[] checked = {
-                    true,
-                    true,
-                    false
-            };
-
-            AlertDialog.Builder builder =
-                    new AlertDialog.Builder(ProfileActivity.this);
-
-            builder.setTitle("Notification Settings");
-
-            builder.setMultiChoiceItems(options,
-                    checked,
-                    (dialog, which, isChecked) -> {
-                    });
-
-            builder.setPositiveButton("Save",
-                    (dialog, which) ->
-
-                            Toast.makeText(
-                                    ProfileActivity.this,
-                                    "Notification Settings Saved",
-                                    Toast.LENGTH_SHORT).show());
-
-            builder.setNegativeButton("Cancel", null);
-
-            builder.show();
-
-        });
-
-        reminderFrequency.setOnClickListener(v -> {
-
-            String[] frequency = {
-                    "15 Minutes",
-                    "30 Minutes",
-                    "1 Hour",
-                    "2 Hours"
-            };
-
-            AlertDialog.Builder builder =
-                    new AlertDialog.Builder(ProfileActivity.this);
-
-            builder.setTitle("Reminder Frequency");
-
-            builder.setSingleChoiceItems(frequency,
-                    1,
-                    (dialog, which) -> {
-                    });
-
-            builder.setPositiveButton("Save",
-                    (dialog, which) ->
-
-                            Toast.makeText(
-                                    ProfileActivity.this,
-                                    "Reminder Updated",
-                                    Toast.LENGTH_SHORT).show());
-
-            builder.show();
-
-        });
-        breakDuration.setOnClickListener(v -> {
-
-            String[] duration = {
-                    "5 Minutes",
-                    "10 Minutes",
-                    "15 Minutes",
-                    "20 Minutes"
-            };
-
-            AlertDialog.Builder builder =
-                    new AlertDialog.Builder(ProfileActivity.this);
-
-            builder.setTitle("Break Duration");
-
-            builder.setSingleChoiceItems(duration,
-                    1,
-                    (dialog, which) -> {
-                    });
-
-            builder.setPositiveButton("Save",
-                    (dialog, which) ->
-
-                            Toast.makeText(
-                                    ProfileActivity.this,
-                                    "Break Duration Updated",
-                                    Toast.LENGTH_SHORT).show());
-
-            builder.show();
-
-        });
-
-        privacyControls.setOnClickListener(v -> {
-
-            String[] options = {
-                    "Collect App Usage",
-                    "Collect Screen Time",
-                    "Anonymous Analytics"
-            };
-
-            boolean[] checked = {
-                    true,
-                    true,
-                    false
-            };
-
-            AlertDialog.Builder builder =
-                    new AlertDialog.Builder(ProfileActivity.this);
-
-            builder.setTitle("Privacy Controls");
-
-            builder.setMultiChoiceItems(options,
-                    checked,
-                    (dialog, which, isChecked) -> {
-                    });
-
-            builder.setPositiveButton("Save",
-                    (dialog, which) ->
-
-                            Toast.makeText(
-                                    ProfileActivity.this,
-                                    "Privacy Settings Saved",
-                                    Toast.LENGTH_SHORT).show());
-
-            builder.show();
-
-        });
-
-        exportData.setOnClickListener(v -> {
-
-            new AlertDialog.Builder(ProfileActivity.this)
-                    .setTitle("Export Data")
-                    .setMessage("Your wellbeing report export feature will be available in a future update.")
-                    .setPositiveButton("OK", null)
-                    .show();
-
-        });
-
-        darkModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-
-            if (isChecked) {
-
-                Toast.makeText(ProfileActivity.this,
-                        "Dark Mode Coming Soon",
-                        Toast.LENGTH_SHORT).show();
-
-            } else {
-
-                Toast.makeText(ProfileActivity.this,
-                        "Light Mode Enabled",
-                        Toast.LENGTH_SHORT).show();
-
-            }
-
-        });
-
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        loadUserData();
+        setupBottomNavigation();
+        setupProfileActions();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        loadUserDetails();
-    }
+    // =========================================================
+    // USER DATA
+    // =========================================================
 
-    private void loadUserDetails() {
+    private void loadUserData() {
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        profileGreetingText =
+                findViewById(R.id.profileGreetingText);
 
-        if (user != null) {
+        profileNameText =
+                findViewById(R.id.profileNameText);
 
-            profileEmail.setText(user.getEmail());
+        profileEmailText =
+                findViewById(R.id.profileEmailText);
 
-            TextView userNameText = findViewById(R.id.userNameText);
+        profileOccupationText =
+                findViewById(R.id.profileOccupationText);
 
-            if (user.getDisplayName() != null &&
-                    !user.getDisplayName().trim().isEmpty()) {
+        FirebaseUser currentUser =
+                firebaseAuth.getCurrentUser();
 
-                profileName.setText(user.getDisplayName());
-                userNameText.setText(user.getDisplayName());
+        if (currentUser == null) {
+            profileGreetingText.setText("Good morning, Student");
+            profileNameText.setText("Student Name");
+            profileEmailText.setText("student@email.com");
+            profileOccupationText.setText("Occupation: Student");
+            return;
+        }
 
-            } else {
+        String name = currentUser.getDisplayName();
+        String email = currentUser.getEmail();
 
-                profileName.setText("MindTrack User");
-                userNameText.setText("MindTrack User");
+        if (name != null && !name.trim().isEmpty()) {
 
-            }
+            profileNameText.setText(name);
+            profileGreetingText.setText(
+                    "Good morning, " + name
+            );
 
         } else {
 
-            Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            profileNameText.setText("Student");
+            profileGreetingText.setText(
+                    "Good morning, Student"
+            );
+        }
+
+        if (email != null && !email.trim().isEmpty()) {
+
+            profileEmailText.setText(email);
+
+        } else {
+
+            profileEmailText.setText(
+                    "student@email.com"
+            );
+        }
+
+        profileOccupationText.setText(
+                "Occupation: Student"
+        );
+    }
+
+
+    // =========================================================
+    // BOTTOM NAVIGATION
+    // =========================================================
+
+    private void setupBottomNavigation() {
+
+        findViewById(R.id.navHome).setOnClickListener(v -> {
+
+            Intent intent = new Intent(
+                    ProfileActivity.this,
+                    DashboardActivity.class
+            );
 
             startActivity(intent);
             finish();
+        });
 
-        }
 
+        findViewById(R.id.navAnalytics).setOnClickListener(v -> {
+
+            Intent intent = new Intent(
+                    ProfileActivity.this,
+                    M2AnalyticsActivity.class
+            );
+
+            startActivity(intent);
+            finish();
+        });
+
+
+        findViewById(R.id.navGuides).setOnClickListener(v -> {
+
+            Intent intent = new Intent(
+                    ProfileActivity.this,
+                    GuideActivity.class
+            );
+
+            startActivity(intent);
+            finish();
+        });
+
+
+        // Already on Profile
+        findViewById(R.id.navProfile).setOnClickListener(v -> {
+            // Do nothing
+        });
+    }
+
+
+    // =========================================================
+    // PROFILE ACTIONS
+    // =========================================================
+
+    private void setupProfileActions() {
+
+        // Edit profile
+
+        findViewById(R.id.editProfileIcon)
+                .setOnClickListener(v -> {
+
+                    Intent intent = new Intent(
+                            ProfileActivity.this,
+                            EditProfileActivity.class
+                    );
+
+                    startActivity(intent);
+                });
+
+
+        // Notification settings
+
+        findViewById(R.id.notificationSettingsRow)
+                .setOnClickListener(v -> {
+
+                    Toast.makeText(
+                            ProfileActivity.this,
+                            "Notification settings coming soon",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                });
+
+
+        // Reminder frequency
+
+        findViewById(R.id.reminderFrequencyRow)
+                .setOnClickListener(v -> {
+
+                    Toast.makeText(
+                            ProfileActivity.this,
+                            "Reminder frequency coming soon",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                });
+
+
+        // Break duration
+
+        findViewById(R.id.breakDurationRow)
+                .setOnClickListener(v -> {
+
+                    Toast.makeText(
+                            ProfileActivity.this,
+                            "Break duration coming soon",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                });
+
+
+        // Dark mode
+
+        darkModeSwitch =
+                findViewById(R.id.darkModeSwitch);
+
+        darkModeSwitch.setOnCheckedChangeListener(
+                (buttonView, isChecked) -> {
+
+                    if (isChecked) {
+
+                        Toast.makeText(
+                                ProfileActivity.this,
+                                "Dark mode coming soon",
+                                Toast.LENGTH_SHORT
+                        ).show();
+
+                    } else {
+
+                        Toast.makeText(
+                                ProfileActivity.this,
+                                "Light mode selected",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+                }
+        );
+
+
+        // Privacy
+
+        findViewById(R.id.privacyControlsRow)
+                .setOnClickListener(v -> {
+
+                    Toast.makeText(
+                            ProfileActivity.this,
+                            "Privacy controls coming soon",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                });
+
+
+        // Export
+
+        findViewById(R.id.exportDataRow)
+                .setOnClickListener(v -> {
+
+                    Toast.makeText(
+                            ProfileActivity.this,
+                            "Data export coming soon",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                });
+
+
+        // Logout
+
+        findViewById(R.id.logoutButton)
+                .setOnClickListener(v -> {
+
+                    firebaseAuth.signOut();
+
+                    Intent intent = new Intent(
+                            ProfileActivity.this,
+                            LoginActivity.class
+                    );
+
+                    intent.setFlags(
+                            Intent.FLAG_ACTIVITY_NEW_TASK |
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    );
+
+                    startActivity(intent);
+                    finish();
+                });
     }
 }

@@ -8,10 +8,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Process;
 import android.provider.Settings;
-import android.widget.Button;
+
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -161,87 +162,6 @@ public class DashboardActivity extends AppCompatActivity {
                 Intent intent =
                         new Intent(
                                 Settings.ACTION_USAGE_ACCESS_SETTINGS
-                        );
-
-                startActivity(intent);
-            });
-        }
-
-        // =====================================================
-        // OPTIONAL OLD BUTTONS
-        // =====================================================
-
-        Button logoutButton =
-                findViewById(R.id.logoutButton);
-
-        if (logoutButton != null) {
-
-            logoutButton.setOnClickListener(v -> {
-
-                FirebaseAuth.getInstance().signOut();
-
-                Intent intent =
-                        new Intent(
-                                DashboardActivity.this,
-                                LoginActivity.class
-                        );
-
-                intent.addFlags(
-                        Intent.FLAG_ACTIVITY_NEW_TASK |
-                                Intent.FLAG_ACTIVITY_CLEAR_TASK
-                );
-
-                startActivity(intent);
-
-                finish();
-            });
-        }
-
-        Button profileButton =
-                findViewById(R.id.profileButton);
-
-        if (profileButton != null) {
-
-            profileButton.setOnClickListener(v -> {
-
-                Intent intent =
-                        new Intent(
-                                DashboardActivity.this,
-                                ProfileActivity.class
-                        );
-
-                startActivity(intent);
-            });
-        }
-
-        Button appUsageButton =
-                findViewById(R.id.appUsageButton);
-
-        if (appUsageButton != null) {
-
-            appUsageButton.setOnClickListener(v -> {
-
-                Intent intent =
-                        new Intent(
-                                DashboardActivity.this,
-                                AppUsageActivity.class
-                        );
-
-                startActivity(intent);
-            });
-        }
-
-        Button behaviorButton =
-                findViewById(R.id.behaviorButton);
-
-        if (behaviorButton != null) {
-
-            behaviorButton.setOnClickListener(v -> {
-
-                Intent intent =
-                        new Intent(
-                                DashboardActivity.this,
-                                BehaviorAnalysisActivity.class
                         );
 
                 startActivity(intent);
