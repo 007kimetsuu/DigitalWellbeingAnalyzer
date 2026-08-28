@@ -305,7 +305,7 @@ public class InterventionManager {
                     new NotificationChannel(
                             CHANNEL_ID,
                             CHANNEL_NAME,
-                            NotificationManager.IMPORTANCE_DEFAULT
+                            NotificationManager.IMPORTANCE_HIGH
                     );
 
 
@@ -351,7 +351,6 @@ public class InterventionManager {
 
         return true;
     }
-
 
     // =========================================================
     // MAIN EVALUATION
