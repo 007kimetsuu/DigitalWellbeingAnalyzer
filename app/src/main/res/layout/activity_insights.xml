@@ -8,15 +8,16 @@
     android:layout_height="match_parent"
     android:background="#F7F6FB">
 
-    <!-- ============================= -->
-    <!-- SCROLLABLE CONTENT             -->
-    <!-- ============================= -->
+    <!-- ================================================= -->
+    <!-- SCROLLABLE CONTENT                                -->
+    <!-- ================================================= -->
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottomNavigation"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,9 +25,9 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- ============================= -->
-            <!-- HEADER                         -->
-            <!-- ============================= -->
+            <!-- ================================================= -->
+            <!-- HEADER                                            -->
+            <!-- ================================================= -->
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -71,10 +72,9 @@
 
             </RelativeLayout>
 
-
-            <!-- ============================= -->
-            <!-- PREMIUM ANALYSIS CARD         -->
-            <!-- ============================= -->
+            <!-- ================================================= -->
+            <!-- BEHAVIOR INSIGHT CARD                             -->
+            <!-- ================================================= -->
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/premiumAnalysisCard"
@@ -94,7 +94,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="✦  PREMIUM ANALYSIS"
+                        android:text="✦  BEHAVIOR INSIGHT"
                         android:textColor="#FFFFFF"
                         android:textSize="10sp"
                         android:textStyle="bold" />
@@ -104,7 +104,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:text="You typically use entertainment apps before bedtime."
+                        android:text="Analyzing your usage..."
                         android:textColor="#FFFFFF"
                         android:textSize="21sp"
                         android:textStyle="bold" />
@@ -114,7 +114,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="This behavior pattern is linked to a 15% decrease in deep sleep quality. Try switching to a reading app 30 minutes earlier."
+                        android:text="MindTrack is evaluating today's behavioral patterns."
                         android:textColor="#FFFFFF"
                         android:textSize="11sp" />
 
@@ -128,7 +128,7 @@
                             android:id="@+id/setBoundaryButton"
                             android:layout_width="120dp"
                             android:layout_height="40dp"
-                            android:text="Set Boundary"
+                            android:text="View Guides"
                             android:textSize="10sp" />
 
                         <Button
@@ -145,10 +145,9 @@
 
             </androidx.cardview.widget.CardView>
 
-
-            <!-- ============================= -->
-            <!-- WEEKLY BEHAVIOR HEADER        -->
-            <!-- ============================= -->
+            <!-- ================================================= -->
+            <!-- WEEKLY BEHAVIOR HEADER                            -->
+            <!-- ================================================= -->
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -176,10 +175,9 @@
 
             </RelativeLayout>
 
-
-            <!-- ============================= -->
-            <!-- WEEKLY BEHAVIOR CARD          -->
-            <!-- ============================= -->
+            <!-- ================================================= -->
+            <!-- WEEKLY BEHAVIOR CARD                              -->
+            <!-- ================================================= -->
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -207,9 +205,9 @@
                         android:id="@+id/weeklyIncreaseText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="-32dp"
                         android:layout_marginStart="45dp"
-                        android:text="42% increase"
+                        android:layout_marginTop="-32dp"
+                        android:text="--"
                         android:textColor="#5046E5"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -220,7 +218,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="45dp"
                         android:layout_marginTop="4dp"
-                        android:text="You spent more time on social media after 7 PM compared to your morning average."
+                        android:text="Calculating weekly comparison..."
                         android:textColor="#777777"
                         android:textSize="10sp" />
 
@@ -237,10 +235,9 @@
 
             </androidx.cardview.widget.CardView>
 
-
-            <!-- ============================= -->
-            <!-- TWO STAT CARDS                -->
-            <!-- ============================= -->
+            <!-- ================================================= -->
+            <!-- STAT CARDS                                        -->
+            <!-- ================================================= -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -277,7 +274,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="3.2h"
+                            android:text="--"
                             android:textColor="#222222"
                             android:textSize="22sp"
                             android:textStyle="bold" />
@@ -285,14 +282,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Avg. Deep Focus"
+                            android:text="Deep Focus"
                             android:textColor="#777777"
                             android:textSize="9sp" />
 
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
-
 
                 <!-- PICKUPS -->
 
@@ -323,7 +319,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="84"
+                            android:text="--"
                             android:textColor="#222222"
                             android:textSize="22sp"
                             android:textStyle="bold" />
@@ -341,10 +337,9 @@
 
             </LinearLayout>
 
-
-            <!-- ============================= -->
-            <!-- CONSISTENCY STREAK            -->
-            <!-- ============================= -->
+            <!-- ================================================= -->
+            <!-- CONSISTENCY STREAK                                -->
+            <!-- ================================================= -->
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -362,9 +357,10 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/consistencyValueText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="75%"
+                        android:text="--"
                         android:textColor="#159447"
                         android:textSize="30sp"
                         android:textStyle="bold" />
@@ -387,7 +383,7 @@
                         android:gravity="center"
                         android:paddingStart="25dp"
                         android:paddingEnd="25dp"
-                        android:text="Your morning screen-free goal was met on 5 of 7 days this week."
+                        android:text="Calculating consistency..."
                         android:textColor="#777777"
                         android:textSize="10sp" />
 
@@ -395,7 +391,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="☁  YOUR METRICS ARE SYNCED &amp; ENCRYPTED"
+                        android:text="☁  ANALYTICS STORED LOCALLY"
                         android:textColor="#888888"
                         android:textSize="8sp" />
 
@@ -407,10 +403,9 @@
 
     </ScrollView>
 
-
-    <!-- ============================= -->
-    <!-- BOTTOM NAVIGATION              -->
-    <!-- ============================= -->
+    <!-- ================================================= -->
+    <!-- BOTTOM NAVIGATION                                 -->
+    <!-- ================================================= -->
 
     <LinearLayout
         android:id="@+id/bottomNavigation"
@@ -448,7 +443,6 @@
 
         </LinearLayout>
 
-
         <!-- ANALYTICS -->
 
         <LinearLayout
@@ -476,7 +470,6 @@
 
         </LinearLayout>
 
-
         <!-- GUIDES -->
 
         <LinearLayout
@@ -502,7 +495,6 @@
                 android:textSize="10sp" />
 
         </LinearLayout>
-
 
         <!-- PROFILE -->
 

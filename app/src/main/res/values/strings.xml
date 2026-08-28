@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">DigitalWellbeingAnalyzer</string>
+    <string name="app_name">MindTrack</string>
 
-    <string name="welcome_user">Welcome, %1$s</string>
-    <string name="welcome_default">Welcome</string>
+    <string name="service_description">
+        MindTrack accessibility service for analyzing app usage context.
+    </string>
 </resources>

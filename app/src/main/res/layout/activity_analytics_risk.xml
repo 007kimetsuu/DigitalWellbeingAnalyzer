@@ -28,7 +28,6 @@
             android:paddingEnd="16dp"
             android:paddingBottom="18dp">
 
-
             <!-- ================================================= -->
             <!-- HEADER                                            -->
             <!-- ================================================= -->
@@ -76,7 +75,6 @@
 
             </RelativeLayout>
 
-
             <!-- ================================================= -->
             <!-- CONFIDENCE / RISK CARD                            -->
             <!-- ================================================= -->
@@ -96,13 +94,9 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <!-- Confidence circle -->
-
                     <FrameLayout
                         android:layout_width="76dp"
                         android:layout_height="76dp">
-
-                        <!-- Outer ring -->
 
                         <TextView
                             android:layout_width="76dp"
@@ -112,14 +106,12 @@
                             android:textColor="#66D49A"
                             android:textSize="66sp" />
 
-                        <!-- Percentage -->
-
                         <TextView
                             android:id="@+id/confidenceText"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:text="89%"
+                            android:text="--"
                             android:textColor="#159447"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -145,7 +137,7 @@
                         android:paddingTop="5dp"
                         android:paddingEnd="12dp"
                         android:paddingBottom="5dp"
-                        android:text="Moderate Risk Identified"
+                        android:text="Analyzing..."
                         android:textColor="#D47A19"
                         android:textSize="9sp"
                         android:textStyle="bold" />
@@ -153,7 +145,6 @@
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
-
 
             <!-- ================================================= -->
             <!-- CRITICAL RISK FACTORS                             -->
@@ -172,8 +163,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="12dp">
-
-                    <!-- Section header -->
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -197,19 +186,19 @@
                             android:paddingTop="3dp"
                             android:paddingEnd="7dp"
                             android:paddingBottom="3dp"
-                            android:text="AI ANALYZED"
+                            android:text="BEHAVIOR ANALYSIS"
                             android:textColor="#5046E5"
                             android:textSize="7sp"
                             android:textStyle="bold" />
 
                     </RelativeLayout>
 
-
                     <!-- ================================================= -->
-                    <!-- RISK 1                                             -->
+                    <!-- RISK FACTOR 1                                     -->
                     <!-- ================================================= -->
 
                     <LinearLayout
+                        android:id="@+id/riskFactorRow1"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:layout_marginTop="6dp"
@@ -236,38 +225,41 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/riskFactorTitle1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Late-night phone usage"
+                                android:text="Analyzing..."
                                 android:textColor="#333333"
                                 android:textSize="10sp"
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/riskFactorDescription1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Extended usage after midnight"
+                                android:text="Waiting for behavioral data"
                                 android:textColor="#999999"
                                 android:textSize="7sp" />
 
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/riskFactorSeverity1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="High"
+                            android:text="--"
                             android:textColor="#E24B4B"
                             android:textSize="8sp"
                             android:textStyle="bold" />
 
                     </LinearLayout>
 
-
                     <!-- ================================================= -->
-                    <!-- RISK 2                                             -->
+                    <!-- RISK FACTOR 2                                     -->
                     <!-- ================================================= -->
 
                     <LinearLayout
+                        android:id="@+id/riskFactorRow2"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:layout_marginTop="5dp"
@@ -294,38 +286,41 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/riskFactorTitle2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Long continuous sessions"
+                                android:text="Analyzing..."
                                 android:textColor="#333333"
                                 android:textSize="10sp"
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/riskFactorDescription2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Extended uninterrupted screen use"
+                                android:text="Waiting for behavioral data"
                                 android:textColor="#999999"
                                 android:textSize="7sp" />
 
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/riskFactorSeverity2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Amber"
+                            android:text="--"
                             android:textColor="#D9822B"
                             android:textSize="8sp"
                             android:textStyle="bold" />
 
                     </LinearLayout>
 
-
                     <!-- ================================================= -->
-                    <!-- RISK 3                                             -->
+                    <!-- RISK FACTOR 3                                     -->
                     <!-- ================================================= -->
 
                     <LinearLayout
+                        android:id="@+id/riskFactorRow3"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:layout_marginTop="5dp"
@@ -352,38 +347,41 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/riskFactorTitle3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="High social media use"
+                                android:text="Analyzing..."
                                 android:textColor="#333333"
                                 android:textSize="10sp"
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/riskFactorDescription3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Frequent social app activity"
+                                android:text="Waiting for behavioral data"
                                 android:textColor="#999999"
                                 android:textSize="7sp" />
 
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/riskFactorSeverity3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Elevated"
+                            android:text="--"
                             android:textColor="#159447"
                             android:textSize="8sp"
                             android:textStyle="bold" />
 
                     </LinearLayout>
 
-
                     <!-- ================================================= -->
-                    <!-- RISK 4                                             -->
+                    <!-- RISK FACTOR 4                                     -->
                     <!-- ================================================= -->
 
                     <LinearLayout
+                        android:id="@+id/riskFactorRow4"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:layout_marginTop="5dp"
@@ -410,26 +408,29 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/riskFactorTitle4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Reduced productivity"
+                                android:text="Analyzing..."
                                 android:textColor="#333333"
                                 android:textSize="10sp"
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/riskFactorDescription4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Less focused digital activity"
+                                android:text="Waiting for behavioral data"
                                 android:textColor="#999999"
                                 android:textSize="7sp" />
 
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/riskFactorSeverity4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Notable"
+                            android:text="--"
                             android:textColor="#5046E5"
                             android:textSize="8sp"
                             android:textStyle="bold" />
@@ -440,7 +441,6 @@
 
             </androidx.cardview.widget.CardView>
 
-
             <!-- ================================================= -->
             <!-- STAT CARDS                                        -->
             <!-- ================================================= -->
@@ -450,8 +450,6 @@
                 android:layout_height="76dp"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
-
-                <!-- Critical Peaks -->
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
@@ -480,7 +478,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="1dp"
-                            android:text="14"
+                            android:text="0"
                             android:textColor="#222222"
                             android:textSize="17sp"
                             android:textStyle="bold" />
@@ -495,9 +493,6 @@
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
-
-
-                <!-- Average Session -->
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
@@ -526,7 +521,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="1dp"
-                            android:text="52m"
+                            android:text="0m"
                             android:textColor="#222222"
                             android:textSize="17sp"
                             android:textStyle="bold" />
@@ -544,9 +539,8 @@
 
             </LinearLayout>
 
-
             <!-- ================================================= -->
-            <!-- AI RECOMMENDATION                                 -->
+            <!-- SMART RECOMMENDATION                              -->
             <!-- ================================================= -->
 
             <androidx.cardview.widget.CardView
@@ -567,24 +561,26 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="AI Recommendation"
+                        android:text="Smart Recommendation"
                         android:textColor="#FFFFFF"
                         android:textSize="13sp"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/recommendationText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
-                        android:text="Our model suggests activating 'Deep Work' mode for the next 4 hours to mitigate digital fatigue and restore cognitive focus."
+                        android:text="Analyzing today's usage patterns..."
                         android:textColor="#FFFFFF"
                         android:textSize="9sp" />
 
                     <Button
+                        android:id="@+id/enableFocusShieldButton"
                         android:layout_width="120dp"
                         android:layout_height="34dp"
                         android:layout_marginTop="9dp"
-                        android:text="Enable Focus Shield"
+                        android:text="View Guides"
                         android:textSize="8sp" />
 
                 </LinearLayout>
@@ -594,7 +590,6 @@
         </LinearLayout>
 
     </ScrollView>
-
 
     <!-- ================================================= -->
     <!-- BOTTOM NAVIGATION                                 -->
@@ -609,7 +604,6 @@
         android:elevation="8dp"
         android:gravity="center"
         android:orientation="horizontal">
-
 
         <!-- HOME -->
 
@@ -636,7 +630,6 @@
                 android:textSize="8sp" />
 
         </LinearLayout>
-
 
         <!-- ANALYTICS -->
 
@@ -665,7 +658,6 @@
 
         </LinearLayout>
 
-
         <!-- GUIDES -->
 
         <LinearLayout
@@ -691,7 +683,6 @@
                 android:textSize="8sp" />
 
         </LinearLayout>
-
 
         <!-- PROFILE -->
 

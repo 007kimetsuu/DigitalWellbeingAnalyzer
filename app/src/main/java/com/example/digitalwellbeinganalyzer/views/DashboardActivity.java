@@ -1,87 +1,205 @@
 package com.example.digitalwellbeinganalyzer.views;
 
-import android.app.AppOpsManager;
-import android.app.usage.UsageStats;
-import android.app.usage.UsageStatsManager;
-import android.content.Context;
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Process;
 import android.provider.Settings;
-
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
-
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import com.example.digitalwellbeinganalyzer.AppCategoryClassifier;
+import com.example.digitalwellbeinganalyzer.InterventionManager;
 import com.example.digitalwellbeinganalyzer.R;
+import com.example.digitalwellbeinganalyzer.RecommendationResult;
+import com.example.digitalwellbeinganalyzer.RiskDataRepository;
+import com.example.digitalwellbeinganalyzer.RiskEngineResult;
+import com.example.digitalwellbeinganalyzer.UsageStatsHelper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class DashboardActivity extends AppCompatActivity {
 
+    private static final int
+            NOTIFICATION_PERMISSION_REQUEST_CODE = 2001;
+
     private FirebaseAuth firebaseAuth;
+    private RiskDataRepository repository;
+
+    private final ExecutorService usageExecutor =
+            Executors.newSingleThreadExecutor();
+
     private TextView screenTimeText;
+    private TextView screenTimeChangeText;
+
+    private TextView wellbeingScoreText;
+    private TextView wellbeingStatusText;
+
+    private TextView longestSessionText;
+    private TextView lastSessionText;
+
+    private TextView riskLevelText;
+    private TextView riskDescriptionText;
+
+    private TextView dailyBreakdownText;
+
+    private TextView recommendationTitleText;
+    private TextView recommendationDescriptionText;
+
+    private ProgressBar wellbeingScoreProgress;
+
+
+    // =========================================================
+    // CREATE
+    // =========================================================
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_dashboard);
+        setContentView(
+                R.layout.activity_dashboard
+        );
+
 
         // =====================================================
-        // FIREBASE
+        // FIREBASE + BACKEND
         // =====================================================
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth =
+                FirebaseAuth.getInstance();
+
+
+        repository =
+                new RiskDataRepository(
+                        getApplicationContext()
+                );
+
+
+        InterventionManager
+                .createNotificationChannel(
+                        this
+                );
+
+
+        requestNotificationPermissionIfNeeded();
+
 
         // =====================================================
-        // HOME UI
+        // CONNECT UI
         // =====================================================
 
         TextView welcomeText =
-                findViewById(R.id.welcomeText);
+                findViewById(
+                        R.id.welcomeText
+                );
+
 
         screenTimeText =
-                findViewById(R.id.screenTimeText);
+                findViewById(
+                        R.id.screenTimeText
+                );
 
-        TextView wellbeingScoreText =
-                findViewById(R.id.wellbeingScoreText);
 
-        TextView wellbeingStatusText =
-                findViewById(R.id.wellbeingStatusText);
+        screenTimeChangeText =
+                findViewById(
+                        R.id.screenTimeChangeText
+                );
 
-        TextView longestSessionText =
-                findViewById(R.id.longestSessionText);
 
-        TextView lastSessionText =
-                findViewById(R.id.lastSessionText);
+        wellbeingScoreText =
+                findViewById(
+                        R.id.wellbeingScoreText
+                );
 
-        TextView riskLevelText =
-                findViewById(R.id.riskLevelText);
 
-        TextView riskDescriptionText =
-                findViewById(R.id.riskDescriptionText);
+        wellbeingStatusText =
+                findViewById(
+                        R.id.wellbeingStatusText
+                );
+
+
+        wellbeingScoreProgress =
+                findViewById(
+                        R.id.wellbeingScoreProgress
+                );
+
+
+        longestSessionText =
+                findViewById(
+                        R.id.longestSessionText
+                );
+
+
+        lastSessionText =
+                findViewById(
+                        R.id.lastSessionText
+                );
+
+
+        riskLevelText =
+                findViewById(
+                        R.id.riskLevelText
+                );
+
+
+        riskDescriptionText =
+                findViewById(
+                        R.id.riskDescriptionText
+                );
+
+
+        dailyBreakdownText =
+                findViewById(
+                        R.id.dailyBreakdownText
+                );
+
+
+        recommendationTitleText =
+                findViewById(
+                        R.id.recommendationTitleText
+                );
+
+
+        recommendationDescriptionText =
+                findViewById(
+                        R.id.recommendationDescriptionText
+                );
+
 
         // =====================================================
-        // CURRENT USER
+        // FIREBASE USER
         // =====================================================
 
         FirebaseUser currentUser =
                 firebaseAuth.getCurrentUser();
+
 
         if (currentUser != null) {
 
             String displayName =
                     currentUser.getDisplayName();
 
+
             String email =
                     currentUser.getEmail();
+
 
             if (displayName != null &&
                     !displayName.trim().isEmpty()) {
@@ -90,14 +208,32 @@ public class DashboardActivity extends AppCompatActivity {
                         displayName + " 👋"
                 );
 
-            } else if (email != null &&
-                    !email.trim().isEmpty()) {
+            } else if (
+                    email != null &&
+                            !email.trim().isEmpty()
+            ) {
 
-                String username =
-                        email.substring(
-                                0,
-                                email.indexOf("@")
-                        );
+                int atIndex =
+                        email.indexOf("@");
+
+
+                String username;
+
+
+                if (atIndex > 0) {
+
+                    username =
+                            email.substring(
+                                    0,
+                                    atIndex
+                            );
+
+                } else {
+
+                    username =
+                            email;
+                }
+
 
                 welcomeText.setText(
                         username + " 👋"
@@ -105,272 +241,1022 @@ public class DashboardActivity extends AppCompatActivity {
             }
         }
 
+
         // =====================================================
-        // DEFAULT HOME VALUES
+        // INITIAL UI
         // =====================================================
 
-        wellbeingScoreText.setText("82");
+        wellbeingScoreText.setText(
+                "--"
+        );
+
 
         wellbeingStatusText.setText(
-                "Healthy"
+                "Calculating"
         );
+
+
+        wellbeingScoreProgress.setProgress(
+                0
+        );
+
 
         screenTimeText.setText(
-                "0h 0m"
+                "--"
         );
 
-        longestSessionText.setText(
-                "0h 0m"
+
+        screenTimeChangeText.setText(
+                "Waiting for usage data"
         );
+
+
+        longestSessionText.setText(
+                "--"
+        );
+
 
         lastSessionText.setText(
                 "--:--"
         );
 
+
         riskLevelText.setText(
-                "Low"
+                "--"
         );
+
 
         riskDescriptionText.setText(
-                "Your current usage pattern looks healthy."
+                "Analyzing your current usage pattern."
         );
 
-        // =====================================================
-        // LOAD SCREEN TIME
-        // =====================================================
 
-        if (hasUsageAccessPermission()) {
+        dailyBreakdownText.setText(
+                "Waiting for usage data"
+        );
 
-            loadTodayScreenTime();
 
-        } else {
+        recommendationTitleText.setText(
+                "Analyzing your usage"
+        );
 
-            screenTimeText.setText("--");
-        }
+
+        recommendationDescriptionText.setText(
+                "A personalized recommendation will appear here."
+        );
+
 
         // =====================================================
         // SETTINGS
         // =====================================================
 
         ImageView settingsButton =
-                findViewById(R.id.settingsButton);
+                findViewById(
+                        R.id.settingsButton
+                );
 
-        if (settingsButton != null) {
 
-            settingsButton.setOnClickListener(v -> {
-
-                Intent intent =
-                        new Intent(
-                                Settings.ACTION_USAGE_ACCESS_SETTINGS
-                        );
-
-                startActivity(intent);
-            });
-        }
-
-        // =====================================================
-        // BOTTOM NAVIGATION
-        // =====================================================
-
-        LinearLayout navHome =
-                findViewById(R.id.navHome);
-
-        LinearLayout navAnalytics =
-                findViewById(R.id.navAnalytics);
-
-        LinearLayout navGuides =
-                findViewById(R.id.navGuides);
-
-        LinearLayout navProfile =
-                findViewById(R.id.navProfile);
-
-        // HOME
-
-        if (navHome != null) {
-
-            navHome.setOnClickListener(v -> {
-
-                // Already on Dashboard
-            });
-        }
-
-        // ANALYTICS
-
-        if (navAnalytics != null) {
-
-            navAnalytics.setOnClickListener(v -> {
-
-                Intent intent =
-                        new Intent(
-                                DashboardActivity.this,
-                                M2AnalyticsActivity.class
-                        );
-
-                startActivity(intent);
-            });
-        }
-
-        // GUIDES
-
-        if (navGuides != null) {
-
-            navGuides.setOnClickListener(v -> {
-
-                Intent intent =
-                        new Intent(
-                                DashboardActivity.this,
-                                GuideActivity.class
-                        );
-
-                startActivity(intent);
-            });
-        }
-
-        // PROFILE
-
-        if (navProfile != null) {
-
-            navProfile.setOnClickListener(v -> {
-
-                Intent intent =
-                        new Intent(
-                                DashboardActivity.this,
-                                ProfileActivity.class
-                        );
-
-                startActivity(intent);
-            });
-        }
-
-        // =====================================================
-        // USAGE ACCESS
-        // =====================================================
-
-        if (!hasUsageAccessPermission()) {
+        settingsButton.setOnClickListener(v -> {
 
             Intent intent =
                     new Intent(
                             Settings.ACTION_USAGE_ACCESS_SETTINGS
                     );
 
-            startActivity(intent);
-        }
-    }
 
-    // =========================================================
-    // CHECK USAGE ACCESS PERMISSION
-    // =========================================================
+            startActivity(
+                    intent
+            );
+        });
 
-    private boolean hasUsageAccessPermission() {
 
-        AppOpsManager appOps =
-                (AppOpsManager)
-                        getSystemService(
-                                Context.APP_OPS_SERVICE
-                        );
+        // =====================================================
+        // NAVIGATION
+        // =====================================================
 
-        if (appOps == null) {
-            return false;
-        }
-
-        int mode =
-                appOps.checkOpNoThrow(
-                        AppOpsManager.OPSTR_GET_USAGE_STATS,
-                        Process.myUid(),
-                        getPackageName()
+        LinearLayout navHome =
+                findViewById(
+                        R.id.navHome
                 );
 
-        return mode ==
-                AppOpsManager.MODE_ALLOWED;
+
+        LinearLayout navAnalytics =
+                findViewById(
+                        R.id.navAnalytics
+                );
+
+
+        LinearLayout navGuides =
+                findViewById(
+                        R.id.navGuides
+                );
+
+
+        LinearLayout navProfile =
+                findViewById(
+                        R.id.navProfile
+                );
+
+
+        navHome.setOnClickListener(v -> {
+            // Already on Dashboard.
+        });
+
+
+        navAnalytics.setOnClickListener(v -> {
+
+            Intent intent =
+                    new Intent(
+                            DashboardActivity.this,
+                            M2AnalyticsActivity.class
+                    );
+
+
+            startActivity(
+                    intent
+            );
+        });
+
+
+        navGuides.setOnClickListener(v -> {
+
+            Intent intent =
+                    new Intent(
+                            DashboardActivity.this,
+                            GuideActivity.class
+                    );
+
+
+            startActivity(
+                    intent
+            );
+        });
+
+
+        navProfile.setOnClickListener(v -> {
+
+            Intent intent =
+                    new Intent(
+                            DashboardActivity.this,
+                            ProfileActivity.class
+                    );
+
+
+            startActivity(
+                    intent
+            );
+        });
+
+
+        // =====================================================
+        // FIRST-TIME USAGE ACCESS
+        // =====================================================
+
+        if (!UsageStatsHelper
+                .hasUsageStatsPermission(this)) {
+
+            Intent intent =
+                    new Intent(
+                            Settings.ACTION_USAGE_ACCESS_SETTINGS
+                    );
+
+
+            startActivity(
+                    intent
+            );
+        }
     }
 
+
     // =========================================================
-    // LOAD TODAY SCREEN TIME
+    // REFRESH
     // =========================================================
 
-    private void loadTodayScreenTime() {
+    @Override
+    protected void onResume() {
 
-        if (!hasUsageAccessPermission()) {
+        super.onResume();
 
-            screenTimeText.setText("--");
+
+        loadUsageData();
+
+        loadFinalRisk();
+
+        loadSmartRecommendation();
+    }
+
+
+    // =========================================================
+    // NOTIFICATION PERMISSION
+    // =========================================================
+
+    private void requestNotificationPermissionIfNeeded() {
+
+        if (Build.VERSION.SDK_INT <
+                Build.VERSION_CODES.TIRAMISU) {
 
             return;
         }
 
-        UsageStatsManager usageStatsManager =
-                (UsageStatsManager)
-                        getSystemService(
-                                Context.USAGE_STATS_SERVICE
-                        );
 
-        if (usageStatsManager == null) {
-
-            screenTimeText.setText("0h 0m");
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+        ) == PackageManager.PERMISSION_GRANTED) {
 
             return;
         }
 
-        Calendar calendar =
-                Calendar.getInstance();
 
-        calendar.set(
-                Calendar.HOUR_OF_DAY,
-                0
+        ActivityCompat.requestPermissions(
+                this,
+                new String[]{
+                        Manifest.permission.POST_NOTIFICATIONS
+                },
+                NOTIFICATION_PERMISSION_REQUEST_CODE
         );
+    }
 
-        calendar.set(
-                Calendar.MINUTE,
-                0
-        );
 
-        calendar.set(
-                Calendar.SECOND,
-                0
-        );
+    // =========================================================
+    // REAL USAGE DATA
+    // =========================================================
 
-        calendar.set(
-                Calendar.MILLISECOND,
-                0
-        );
+    private void loadUsageData() {
 
-        long startTime =
-                calendar.getTimeInMillis();
+        if (!UsageStatsHelper
+                .hasUsageStatsPermission(this)) {
 
-        long endTime =
-                System.currentTimeMillis();
+            screenTimeText.setText(
+                    "--"
+            );
 
-        List<UsageStats> usageStatsList =
-                usageStatsManager.queryUsageStats(
-                        UsageStatsManager.INTERVAL_DAILY,
-                        startTime,
-                        endTime
+
+            longestSessionText.setText(
+                    "--"
+            );
+
+
+            lastSessionText.setText(
+                    "--:--"
+            );
+
+
+            screenTimeChangeText.setText(
+                    "Usage Access permission required"
+            );
+
+
+            dailyBreakdownText.setText(
+                    "Usage Access permission required"
+            );
+
+
+            return;
+        }
+
+
+        usageExecutor.execute(() -> {
+
+            // -------------------------------------------------
+            // TODAY'S SCREEN TIME
+            // -------------------------------------------------
+
+            long todayUsage =
+                    UsageStatsHelper
+                            .getTotalSessionUsageToday(
+                                    getApplicationContext()
+                            );
+
+
+            // -------------------------------------------------
+            // LONGEST SESSION
+            // -------------------------------------------------
+
+            long longestSession =
+                    UsageStatsHelper
+                            .getLongestSessionDurationToday(
+                                    getApplicationContext()
+                            );
+
+
+            // -------------------------------------------------
+            // LAST COMPLETED SESSION
+            // -------------------------------------------------
+
+            long lastSessionEnd =
+                    UsageStatsHelper
+                            .getLastSessionEndToday(
+                                    getApplicationContext()
+                            );
+
+
+            // -------------------------------------------------
+            // YESTERDAY
+            // -------------------------------------------------
+
+            Calendar todayStart =
+                    Calendar.getInstance();
+
+
+            todayStart.set(
+                    Calendar.HOUR_OF_DAY,
+                    0
+            );
+
+
+            todayStart.set(
+                    Calendar.MINUTE,
+                    0
+            );
+
+
+            todayStart.set(
+                    Calendar.SECOND,
+                    0
+            );
+
+
+            todayStart.set(
+                    Calendar.MILLISECOND,
+                    0
+            );
+
+
+            Calendar yesterdayStart =
+                    (Calendar)
+                            todayStart.clone();
+
+
+            yesterdayStart.add(
+                    Calendar.DAY_OF_YEAR,
+                    -1
+            );
+
+
+            long yesterdayUsage =
+                    UsageStatsHelper
+                            .getTotalSessionUsageBetween(
+
+                                    getApplicationContext(),
+
+                                    yesterdayStart
+                                            .getTimeInMillis(),
+
+                                    todayStart
+                                            .getTimeInMillis()
+                            );
+
+
+            // -------------------------------------------------
+            // CATEGORY BREAKDOWN
+            // -------------------------------------------------
+
+            Map<String, Long> categoryTotals =
+                    AppCategoryClassifier
+                            .getCategoryUsageToday(
+                                    getApplicationContext()
+                            );
+
+
+            runOnUiThread(() -> {
+
+                if (!isActivityUsable()) {
+
+                    return;
+                }
+
+
+                screenTimeText.setText(
+                        formatDuration(
+                                todayUsage
+                        )
                 );
 
-        long totalUsageMillis = 0;
 
-        if (usageStatsList != null) {
+                longestSessionText.setText(
+                        formatDuration(
+                                longestSession
+                        )
+                );
 
-            for (UsageStats usageStats :
-                    usageStatsList) {
 
-                totalUsageMillis +=
-                        usageStats.getTotalTimeInForeground();
-            }
+                lastSessionText.setText(
+                        formatSessionEnd(
+                                lastSessionEnd
+                        )
+                );
+
+
+                screenTimeChangeText.setText(
+                        buildUsageComparison(
+                                todayUsage,
+                                yesterdayUsage
+                        )
+                );
+
+
+                dailyBreakdownText.setText(
+                        buildCategoryBreakdown(
+                                categoryTotals
+                        )
+                );
+            });
+        });
+    }
+
+
+    // =========================================================
+    // FINAL COMBINED RISK + WELLBEING SCORE
+    // =========================================================
+
+    private void loadFinalRisk() {
+
+        repository.getFinalRiskToday(
+
+                getApplicationContext(),
+
+                result -> runOnUiThread(() -> {
+
+                    if (!isActivityUsable()) {
+
+                        return;
+                    }
+
+
+                    if (result == null) {
+
+                        riskLevelText.setText(
+                                "No Data"
+                        );
+
+
+                        riskDescriptionText.setText(
+                                "Risk analysis is not available yet."
+                        );
+
+
+                        wellbeingScoreText.setText(
+                                "--"
+                        );
+
+
+                        wellbeingStatusText.setText(
+                                "Waiting for data"
+                        );
+
+
+                        wellbeingScoreProgress.setProgress(
+                                0
+                        );
+
+
+                        return;
+                    }
+
+
+                    updateFinalRiskUI(
+                            result
+                    );
+
+
+                    updateWellbeingFromRisk(
+                            result
+                    );
+                })
+        );
+    }
+
+
+    // =========================================================
+    // WELLBEING FROM COMBINED RISK
+    // =========================================================
+
+    private void updateWellbeingFromRisk(
+            RiskEngineResult result
+    ) {
+
+        int safeRiskScore =
+                Math.max(
+                        0,
+                        Math.min(
+                                100,
+                                result.finalRiskScore
+                        )
+                );
+
+
+        /*
+         * Risk score:
+         * 0   = lowest risk
+         * 100 = highest risk
+         *
+         * Wellbeing score is the inverse:
+         * 100 = strongest wellbeing
+         * 0   = weakest wellbeing
+         */
+        int wellbeingScore =
+                100 -
+                        safeRiskScore;
+
+
+        wellbeingScoreText.setText(
+                String.valueOf(
+                        wellbeingScore
+                )
+        );
+
+
+        wellbeingScoreProgress.setProgress(
+                wellbeingScore
+        );
+
+
+        if (wellbeingScore >= 80) {
+
+            wellbeingStatusText.setText(
+                    "Healthy"
+            );
+
+        } else if (
+                wellbeingScore >= 50
+        ) {
+
+            wellbeingStatusText.setText(
+                    "Moderate"
+            );
+
+        } else {
+
+            wellbeingStatusText.setText(
+                    "Needs Attention"
+            );
         }
+    }
+
+
+    // =========================================================
+    // FINAL RISK UI
+    // =========================================================
+
+    private void updateFinalRiskUI(
+            RiskEngineResult result
+    ) {
+
+        switch (result.finalRiskLevel) {
+
+            case RiskEngineResult.LEVEL_HIGH:
+
+                riskLevelText.setText(
+                        "High"
+                );
+
+
+                riskDescriptionText.setText(
+                        "Your current combined usage and behavioral analysis shows elevated risk."
+                );
+
+                break;
+
+
+            case RiskEngineResult.LEVEL_MEDIUM:
+
+                riskLevelText.setText(
+                        "Moderate"
+                );
+
+
+                riskDescriptionText.setText(
+                        "Some current usage patterns may need attention."
+                );
+
+                break;
+
+
+            case RiskEngineResult.LEVEL_LOW:
+
+            default:
+
+                riskLevelText.setText(
+                        "Low"
+                );
+
+
+                riskDescriptionText.setText(
+                        "Your current combined usage pattern is within the lower-risk range."
+                );
+
+                break;
+        }
+    }
+
+
+    // =========================================================
+    // SMART RECOMMENDATION
+    // =========================================================
+
+    private void loadSmartRecommendation() {
+
+        repository.getSmartRecommendationToday(
+
+                getApplicationContext(),
+
+                recommendation ->
+                        runOnUiThread(() -> {
+
+                            if (!isActivityUsable()) {
+
+                                return;
+                            }
+
+
+                            if (recommendation == null) {
+
+                                recommendationTitleText.setText(
+                                        "Build a healthier pattern"
+                                );
+
+
+                                recommendationDescriptionText.setText(
+                                        "Keep using MindTrack to receive personalized guidance."
+                                );
+
+
+                                return;
+                            }
+
+
+                            displayRecommendation(
+                                    recommendation
+                            );
+                        })
+        );
+    }
+
+
+    private void displayRecommendation(
+            RecommendationResult recommendation
+    ) {
+
+        if (recommendation.title != null &&
+                !recommendation.title
+                        .trim()
+                        .isEmpty()) {
+
+            recommendationTitleText.setText(
+                    recommendation.title
+            );
+
+        } else {
+
+            recommendationTitleText.setText(
+                    "Today's Recommendation"
+            );
+        }
+
+
+        if (recommendation.message != null &&
+                !recommendation.message
+                        .trim()
+                        .isEmpty()) {
+
+            recommendationDescriptionText.setText(
+                    recommendation.message
+            );
+
+        } else {
+
+            recommendationDescriptionText.setText(
+                    "Continue monitoring your digital habits."
+            );
+        }
+    }
+
+
+    // =========================================================
+    // CATEGORY BREAKDOWN
+    // =========================================================
+
+    private String buildCategoryBreakdown(
+            Map<String, Long> totals
+    ) {
+
+        if (totals == null ||
+                totals.isEmpty()) {
+
+            return "No usage data yet";
+        }
+
+
+        long education =
+                getCategoryValue(
+                        totals,
+                        AppCategoryClassifier
+                                .CATEGORY_EDUCATION
+                );
+
+
+        long productivity =
+                getCategoryValue(
+                        totals,
+                        AppCategoryClassifier
+                                .CATEGORY_PRODUCTIVITY
+                );
+
+
+        long social =
+                getCategoryValue(
+                        totals,
+                        AppCategoryClassifier
+                                .CATEGORY_SOCIAL
+                );
+
+
+        long communication =
+                getCategoryValue(
+                        totals,
+                        AppCategoryClassifier
+                                .CATEGORY_COMMUNICATION
+                );
+
+
+        long entertainment =
+                getCategoryValue(
+                        totals,
+                        AppCategoryClassifier
+                                .CATEGORY_ENTERTAINMENT
+                );
+
+
+        long gaming =
+                getCategoryValue(
+                        totals,
+                        AppCategoryClassifier
+                                .CATEGORY_GAMING
+                );
+
+
+        long utilities =
+                getCategoryValue(
+                        totals,
+                        AppCategoryClassifier
+                                .CATEGORY_UTILITIES
+                );
+
+
+        long other =
+                getCategoryValue(
+                        totals,
+                        AppCategoryClassifier
+                                .CATEGORY_OTHER
+                );
+
+
+        long total =
+                education
+                        + productivity
+                        + social
+                        + communication
+                        + entertainment
+                        + gaming
+                        + utilities
+                        + other;
+
+
+        if (total <= 0) {
+
+            return "No usage data yet";
+        }
+
+
+        return
+                "● Education             "
+                        + calculatePercent(
+                        education,
+                        total
+                )
+                        + "%\n"
+
+                        + "● Productivity          "
+                        + calculatePercent(
+                        productivity,
+                        total
+                )
+                        + "%\n"
+
+                        + "● Social                "
+                        + calculatePercent(
+                        social,
+                        total
+                )
+                        + "%\n"
+
+                        + "● Communication         "
+                        + calculatePercent(
+                        communication,
+                        total
+                )
+                        + "%\n"
+
+                        + "● Entertainment         "
+                        + calculatePercent(
+                        entertainment,
+                        total
+                )
+                        + "%\n"
+
+                        + "● Gaming                "
+                        + calculatePercent(
+                        gaming,
+                        total
+                )
+                        + "%\n"
+
+                        + "● Utilities             "
+                        + calculatePercent(
+                        utilities,
+                        total
+                )
+                        + "%\n"
+
+                        + "● Other                 "
+                        + calculatePercent(
+                        other,
+                        total
+                )
+                        + "%";
+    }
+
+
+    private long getCategoryValue(
+            Map<String, Long> totals,
+            String category
+    ) {
+
+        Long value =
+                totals.get(
+                        category
+                );
+
+
+        return value != null
+                ? value
+                : 0L;
+    }
+
+
+    private int calculatePercent(
+            long value,
+            long total
+    ) {
+
+        if (total <= 0) {
+
+            return 0;
+        }
+
+
+        return (int) Math.round(
+                (value * 100.0)
+                        / total
+        );
+    }
+
+
+    // =========================================================
+    // USAGE COMPARISON
+    // =========================================================
+
+    private String buildUsageComparison(
+            long todayUsage,
+            long yesterdayUsage
+    ) {
+
+        if (yesterdayUsage <= 0) {
+
+            return "No comparison data from yesterday";
+        }
+
+
+        double difference =
+                todayUsage
+                        - yesterdayUsage;
+
+
+        int percentage =
+                (int) Math.round(
+                        Math.abs(
+                                difference /
+                                        (double)
+                                                yesterdayUsage
+                        ) * 100
+                );
+
+
+        if (difference < 0) {
+
+            return "↓ "
+                    + percentage
+                    + "% from yesterday";
+        }
+
+
+        if (difference > 0) {
+
+            return "↑ "
+                    + percentage
+                    + "% from yesterday";
+        }
+
+
+        return "Same as yesterday";
+    }
+
+
+    // =========================================================
+    // HELPERS
+    // =========================================================
+
+    private boolean isActivityUsable() {
+
+        return !isFinishing()
+                && !isDestroyed();
+    }
+
+
+    private String formatDuration(
+            long milliseconds
+    ) {
+
+        if (milliseconds <= 0) {
+
+            return "0h 0m";
+        }
+
 
         long totalMinutes =
-                totalUsageMillis /
-                        (1000 * 60);
+                milliseconds /
+                        (1000L * 60L);
+
 
         long hours =
-                totalMinutes / 60;
+                totalMinutes /
+                        60L;
+
 
         long minutes =
-                totalMinutes % 60;
+                totalMinutes %
+                        60L;
 
-        screenTimeText.setText(
-                hours + "h " +
-                        minutes + "m"
+
+        return hours
+                + "h "
+                + minutes
+                + "m";
+    }
+
+
+    private String formatSessionEnd(
+            long timestamp
+    ) {
+
+        if (timestamp <= 0) {
+
+            return "--:--";
+        }
+
+
+        SimpleDateFormat format =
+                new SimpleDateFormat(
+                        "h:mm a",
+                        Locale.getDefault()
+                );
+
+
+        return format.format(
+                new Date(
+                        timestamp
+                )
         );
+    }
+
+
+    // =========================================================
+    // CLEANUP
+    // =========================================================
+
+    @Override
+    protected void onDestroy() {
+
+        usageExecutor.shutdownNow();
+
+
+        if (repository != null) {
+
+            repository.shutdown();
+        }
+
+
+        super.onDestroy();
     }
 }

@@ -90,11 +90,12 @@
                     android:layout_marginTop="4dp">
 
                     <ProgressBar
+                        android:id="@+id/wellbeingScoreProgress"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:indeterminate="false"
                         android:max="100"
-                        android:progress="82"
+                        android:progress="0"
                         android:progressDrawable="@drawable/wellbeing_score_ring" />
 
                     <LinearLayout
@@ -107,7 +108,7 @@
                             android:id="@+id/wellbeingScoreText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="82"
+                            android:text="--"
                             android:textColor="@color/primary"
                             android:textSize="28sp"
                             android:textStyle="bold" />
@@ -128,7 +129,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="Healthy"
+                    android:text="Calculating"
                     android:textColor="@color/secondary"
                     android:textSize="11sp"
                     android:textStyle="bold" />
@@ -169,7 +170,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:text="↓ 12% from yesterday"
+                    android:text="Waiting for usage data"
                     android:textColor="@color/secondary"
                     android:textSize="10sp" />
 
@@ -273,7 +274,7 @@
                         android:id="@+id/riskLevelText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Low"
+                        android:text="--"
                         android:textColor="@color/secondary"
                         android:textSize="13sp"
                         android:textStyle="bold" />
@@ -285,7 +286,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Your current usage pattern looks healthy."
+                    android:text="Analyzing your current usage pattern."
                     android:textColor="@color/text_secondary"
                     android:textSize="10sp" />
 
@@ -360,7 +361,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="18dp"
                     android:layout_weight="1"
-                    android:text="● Study                 45%&#10;● Social                30%&#10;● Miscellaneous         25%"
+                    android:text="Waiting for usage data"
                     android:textColor="@color/text_primary"
                     android:textSize="10sp"
                     android:lineSpacingExtra="5dp" />
@@ -369,6 +370,7 @@
 
 
             <!-- WEEKLY CHALLENGE -->
+            <!-- SMART RECOMMENDATION -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -381,25 +383,27 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="WEEKLY CHALLENGE"
+                    android:text="SMART RECOMMENDATION"
                     android:textColor="@color/primary"
                     android:textSize="9sp"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/recommendationTitleText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Focus on Flow State"
+                    android:text="Analyzing your usage"
                     android:textColor="@color/text_primary"
                     android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/recommendationDescriptionText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:text="Try 3 hours of non-interrupted focused time this week."
+                    android:text="A personalized recommendation will appear here."
                     android:textColor="@color/text_secondary"
                     android:textSize="10sp" />
 
@@ -412,6 +416,44 @@
         </LinearLayout>
 
     </ScrollView>
+    <!-- SMART RECOMMENDATION -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_confidence_card"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SMART RECOMMENDATION"
+            android:textColor="@color/primary"
+            android:textSize="9sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/recommendationTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Analyzing your usage"
+            android:textColor="@color/text_primary"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/recommendationDescriptionText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="A personalized recommendation will appear here."
+            android:textColor="@color/text_secondary"
+            android:textSize="10sp" />
+
+    </LinearLayout>
 
 
     <!-- BOTTOM NAVIGATION -->
